@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseViewController: UIViewController {
- 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -18,6 +17,7 @@ class BaseViewController: UIViewController {
         setUpTableView()
         setUpNavigationItems()
         setUpNavigationTitle()
+        bind()
         hideKeyboardWhenTappedAround()
     }
     func setUpHierarchy() { }
@@ -26,6 +26,7 @@ class BaseViewController: UIViewController {
     func setUpTableView() { }
     func setUpButton() { }
     func setUpNavigationTitle() { }
+    func bind() { }
     func setUpNavigationItems() {
         navigationItem.backBarButtonItem?.tintColor = .black
         let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
