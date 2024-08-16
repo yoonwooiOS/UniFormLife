@@ -12,7 +12,10 @@ import RxCocoa
 
 final class SignInViewController: BaseViewController {
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
-    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")
+    private let passwordTextField = {
+        let button = SignTextField(placeholderText: "비밀번호를 입력해주세요")
+        return button
+    }()
     private let signInButton = BaseButton(title: "로그인")
     private let signUpButton = {
         let button = UIButton()
@@ -25,13 +28,23 @@ final class SignInViewController: BaseViewController {
         print("\(self)")
     }
     private let disposeBag = DisposeBag()
+    let signInViewModel = SignInViewModel()
+    // input : email,
     override func bind() {
-       
-        signUpButton.rx.tap
-            .bind(with: self) { owner, _ in
-                print("dsdsa")
-                owner.goToOtehrVC(vc: EmailViewController(), mode: .push)
-            }
+        
+        let input = SignInViewModel.Input(signInButtonTap: signInButton.rx.tap, eamilText: emailTextField.rx.text.orEmpty, passwordText: passwordTextField.rx.text.orEmpty)
+        
+        let output = signInViewModel.transfrom(input: input)
+   
+        output.createLoginValid
+            .bind(with: self, onNext: { owner, result in
+                switch result {
+                case .success(_):
+                    owner.goToRootView(rootView: HomeTabBarController())
+                case .failure(_):
+                    owner.showBasicAlert("아이디, 비밀번호를 확인해주세요!")
+                }
+            })
             .disposed(by: disposeBag)
     }
     override func setUpHierarchy() {

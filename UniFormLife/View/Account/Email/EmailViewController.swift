@@ -27,6 +27,9 @@ final class EmailViewController: BaseViewController {
     }()
     private let nextButton = BaseButton(title: "다음")
     private let disposeBag = DisposeBag()
+    deinit {
+        print("\(self)")
+    }
     override func bind() {
         nextButton.rx.tap
             .bind(with: self) { owner, _ in
