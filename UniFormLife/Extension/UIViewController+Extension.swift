@@ -45,8 +45,10 @@ extension UIViewController {
         sceneDelegate?.window?.rootViewController = navigationController
         sceneDelegate?.window?.makeKeyAndVisible()
     }
-    func showBasicAlert() {
-        
+    func showBasicAlert(_ title: String) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "확인", style: .default))
+          self.present(alert, animated: true)
     }
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
