@@ -13,6 +13,7 @@ enum Router: TargetType {
     case fetchProfile
     case editProfile
     case refresh
+    case importPost
     
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -23,6 +24,8 @@ enum Router: TargetType {
         case .editProfile:
             return .put
         case .refresh:
+            return .get
+        case .importPost:
             return .get
         }
     }
@@ -62,6 +65,8 @@ extension Router {
            return  "/users/me/profile"
         case .refresh:
             return "/auth/refresh"
+        case .importPost:
+            return "/posts"
         }
     }
     var header: [String: String] {
@@ -90,6 +95,11 @@ extension Router {
                 Header.refresh.rawValue: UserDefaultsManeger.shared.refreshToken,
                 Header.sesacKey.rawValue: APIKey.key
                 ]
+        case .importPost:
+            return [
+            Header.contentType.rawValue: Header.json.rawValue,
+            Header.sesacKey.rawValue : APIKey.key
+            ]
         }
     }
 }

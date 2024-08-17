@@ -52,6 +52,7 @@
 		99008D602C6F430100DC836C /* UniformStyleFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D5F2C6F430100DC836C /* UniformStyleFeedViewController.swift */; };
 		99008D622C6F431600DC836C /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D612C6F431600DC836C /* AddPostViewController.swift */; };
 		99008D642C6F432B00DC836C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D632C6F432B00DC836C /* ProfileViewController.swift */; };
+		99008D662C70CCBB00DC836C /* ImportPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D652C70CCBB00DC836C /* ImportPostModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		99008D5F2C6F430100DC836C /* UniformStyleFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformStyleFeedViewController.swift; sourceTree = "<group>"; };
 		99008D612C6F431600DC836C /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		99008D632C6F432B00DC836C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		99008D652C70CCBB00DC836C /* ImportPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPostModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +288,7 @@
 				99008D492C6DFA3000DC836C /* ProfileModel.swift */,
 				99008D4B2C6DFA4800DC836C /* RefreshModel.swift */,
 				99008D4D2C6DFA5100DC836C /* FileModel.swift */,
+				99008D652C70CCBB00DC836C /* ImportPostModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				99008D412C6DF97800DC836C /* TargetType.swift in Sources */,
 				99008D242C6D965600DC836C /* SignTextField.swift in Sources */,
 				99008D262C6D9A8600DC836C /* BaseButton.swift in Sources */,
+				99008D662C70CCBB00DC836C /* ImportPostModel.swift in Sources */,
 				99008D642C6F432B00DC836C /* ProfileViewController.swift in Sources */,
 				99008D622C6F431600DC836C /* AddPostViewController.swift in Sources */,
 				99008CF52C6C9A7100DC836C /* BaseViewController.swift in Sources */,
