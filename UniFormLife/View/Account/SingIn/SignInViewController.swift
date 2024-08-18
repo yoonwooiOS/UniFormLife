@@ -32,7 +32,7 @@ final class SignInViewController: BaseViewController {
     // input : email,
     override func bind() {
         
-        let input = SignInViewModel.Input(signInButtonTap: signInButton.rx.tap, eamilText: emailTextField.rx.text.orEmpty, passwordText: passwordTextField.rx.text.orEmpty)
+        let input = SignInViewModel.Input(signInButtonTap: signInButton.rx.tap, signUpButtonTap: signUpButton.rx.tap, eamilText: emailTextField.rx.text.orEmpty, passwordText: passwordTextField.rx.text.orEmpty)
         
         let output = signInViewModel.transfrom(input: input)
    
@@ -45,6 +45,11 @@ final class SignInViewController: BaseViewController {
                     owner.showBasicAlert("아이디, 비밀번호를 확인해주세요!")
                 }
             })
+            .disposed(by: disposeBag)
+        output.signUpButtonTap
+            .bind(with: self) { owner, _ in
+                owner.goToOtehrVC(vc: EmailValidViewController(), mode: .push)
+            }
             .disposed(by: disposeBag)
     }
     override func setUpHierarchy() {

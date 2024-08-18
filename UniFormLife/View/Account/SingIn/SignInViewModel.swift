@@ -13,11 +13,13 @@ class SignInViewModel: ViewModelType {
    let disposeBag = DisposeBag()
     struct Input {
         let signInButtonTap: ControlEvent<Void>
+        let signUpButtonTap: ControlEvent<Void>
         let eamilText: ControlProperty<String>
         let passwordText: ControlProperty<String>
     }
     struct Output {
         let createLoginValid: PublishSubject<Result<LoginModel, Error>>
+        let signUpButtonTap: ControlEvent<Void>
     }
     
     func transfrom(input: Input) -> Output {
@@ -50,7 +52,7 @@ class SignInViewModel: ViewModelType {
                 }
             }
             .disposed(by: disposeBag)
-        return Output(createLoginValid: createLoginValid)
+        return Output(createLoginValid: createLoginValid, signUpButtonTap: input.signUpButtonTap)
     }
     
 }
