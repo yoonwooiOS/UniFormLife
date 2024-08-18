@@ -11,6 +11,32 @@ import RxSwift
 
 struct NetworkManager {
     private init() { }
+    static func callRequest<T: Decodable>(router: Router, completionHandler: @escaping (Result<T, Error>) -> Void) -> Void {
+        do {
+            let request = try router.asURLRequest()
+            AF.request(request).responseDecodable(of: T.self) { response in
+                switch response.result {
+                case .success(let success):
+                    if let loginModel = success as? LoginModel {
+                        UserDefaultsManeger.shared.token = loginModel.access
+                        UserDefaultsManeger.shared.refreshToken = loginModel.refresh
+                    }
+                    completionHandler(.success(success))
+                case .failure(let failure):
+                    print("fail", failure)
+                    if response.response?.statusCode == 419 {
+                        self.fetchProfile()
+                    }
+                    completionHandler(.failure(failure))
+                }
+            }
+        } catch {
+            print(error)
+            completionHandler(.failure(error))
+        }
+    }
+    
+    
     static func loginUser(email: String, password: String, loginCompletionHandler: @escaping (Result<LoginModel, Error>) -> Void) -> Void {
         do {
             let query = LoginQuery(email: email, password: password)
