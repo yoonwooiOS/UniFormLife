@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct RefreshModel: Decodable {
+struct Refresh: Decodable {
     let accessToken: String
 }

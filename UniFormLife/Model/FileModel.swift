@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct FilesModel: Decodable {
+struct Files: Decodable {
     let files: [String]
 }
