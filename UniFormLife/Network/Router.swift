@@ -16,7 +16,9 @@ enum Router: TargetType {
     case importPost
     case validateEmail(email: String)
     case withdrawAccount
-    case upLoadPostImage
+    case uploadPostImage
+    case uploadPost
+    case fetchPost(productID: String)
     
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -34,8 +36,12 @@ enum Router: TargetType {
             return .post
         case .withdrawAccount:
             return .get
-        case .upLoadPostImage:
+        case .uploadPostImage:
             return .post
+        case .uploadPost:
+            return .post
+        case .fetchPost:
+            return .get
         }
     }
     
@@ -44,7 +50,12 @@ enum Router: TargetType {
     }
     
     var queryItems: [URLQueryItem]? {
-        return nil
+        switch self {
+        case .fetchPost(let productID):
+            return [URLQueryItem(name: "product_id", value: productID)]
+        default:
+            return nil
+        }
     }
     
     var body: Data? {
@@ -63,24 +74,28 @@ enum Router: TargetType {
 }
 extension Router {
     var baseURL: String {
-        return APIKey.baseURL + "v1"
+        return APIKey.baseURL + "v1/"
     }
     var path: String {
         switch self {
         case .login:
-            return "/users/login"
+            return "users/login"
         case .fetchProfile, .editProfile:
-            return  "/users/me/profile"
+            return  "users/me/profile"
         case .refresh:
-            return "/auth/refresh"
+            return "auth/refresh"
         case .validateEmail:
-            return "/validation/email"
+            return "validation/email"
         case .importPost:
-            return "/posts"
+            return "posts"
         case .withdrawAccount:
-            return "/users/withdraw"
-        case .upLoadPostImage:
-            return "/posts/files"
+            return "users/withdraw"
+        case .uploadPostImage:
+            return "posts/files"
+        case .uploadPost:
+            return "posts"
+        case .fetchPost:
+            return "posts"
         }
     }
     var header: [String: String] {
@@ -126,10 +141,21 @@ extension Router {
                 Header.contentType.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue : APIKey.key
             ]
-        case .upLoadPostImage:
+        case .uploadPostImage:
             return [
                 Header.authorization.rawValue: UserDefaultsManeger.shared.token,
                 Header.contentType.rawValue: Header.multipart.rawValue,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        case .uploadPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        case .fetchPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
                 Header.sesacKey.rawValue : APIKey.key
             ]
         }

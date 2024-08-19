@@ -4,10 +4,9 @@
 //
 //  Created by 김윤우 on 8/15/24.
 //
-
-import Foundation
 import Alamofire
 import RxSwift
+import UIKit
 
 struct NetworkManager {
     private init() { }
@@ -17,7 +16,7 @@ struct NetworkManager {
             AF.request(request).responseDecodable(of: T.self) { response in
                 switch response.result {
                 case .success(let success):
-                    if let loginModel = success as? LoginModel {
+                    if let loginModel = success as? Login {
                         UserDefaultsManeger.shared.token = loginModel.access
                         UserDefaultsManeger.shared.refreshToken = loginModel.refresh
                     }
@@ -35,20 +34,44 @@ struct NetworkManager {
             completionHandler(.failure(error))
         }
     }
+    static func fetchPost(productID: String, fetchPostCompletionHandler: @escaping (Result<FetchPost, Error>) -> Void) -> Void {
+        do {
+            let query = productID
+            let request = try Router.fetchPost(productID: query).asURLRequest()
+            AF.request(request).responseDecodable(of: FetchPost.self) { response in
+                if response.response?.statusCode == 419 {
+                    self.refreshToken()
+                } else {
+                    switch response.result {
+                    case .success(let success):
+//                        print(success)
+                        fetchPostCompletionHandler(.success(success))
+                    case .failure(let failure):
+                        print(failure)
+                        fetchPostCompletionHandler(.failure(failure))
+                    }
+                }
+            }
+        } catch {
+            print(error, "fetchProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
+        }
+        
+    }
     
-    
-    static func loginUser(email: String, password: String, loginCompletionHandler: @escaping (Result<LoginModel, Error>) -> Void) -> Void {
+    static func loginUser(email: String, password: String, loginCompletionHandler: @escaping (Result<Login, Error>) -> Void) -> Void {
         do {
             let query = LoginQuery(email: email, password: password)
-            let request = try Router.login(query: query).asURLRequest()
-            AF.request(request).responseDecodable(of: LoginModel.self) { response in
+            let request = try Route    r.login(query: query).asURLRequest()
+            AF.request(request).responseDecodable(of: Login.self) { response in
                 switch response.result{
                 case .success(let success):
                     //                        print(success)
                     UserDefaultsManeger.shared.token = success.access
                     UserDefaultsManeger.shared.refreshToken = success.refresh
+                    print("UD AT\(UserDefaultsManeger.shared.token)")
+                    print("UD RT \(UserDefaultsManeger.shared.refreshToken)")
                     loginCompletionHandler(.success(success))
-                    //                      goToRootView(rootView: )
+
                 case .failure(let failure):
                     print("fail", failure)
                     if response.response?.statusCode == 419 {
@@ -64,18 +87,15 @@ struct NetworkManager {
         }
     }
     static func fetchProfile() {
-        // let request = try! Router.fetchProfile.asURLRequest()
         do {
             let request = try Router.fetchProfile.asURLRequest()
-            AF.request(request).responseDecodable(of: ProfileModel.self) { response in
+            AF.request(request).responseDecodable(of: Profile.self) { response in
                 if response.response?.statusCode == 419 {
                     self.refreshToken()
                 } else {
                     switch response.result {
                     case .success(let success):
                         print(success)
-                        //                        self.profileView.emailLabel.text = success.email
-                        //                        self.profileView.userNameLabel.text = success.nick
                     case .failure(let failure):
                         print(failure)
                     }
@@ -88,7 +108,7 @@ struct NetworkManager {
     static func editProfile(api: Router) {
         do {
             let request = try Router.editProfile.asURLRequest()
-            AF.request(request).responseDecodable(of: ProfileModel.self) { response in
+            AF.request(request).responseDecodable(of: Profile.self) { response in
                 if response.response?.statusCode == 419 {
                     self.refreshToken()
                 } else {
@@ -108,10 +128,16 @@ struct NetworkManager {
     static func refreshToken() {
         do {
             let request = try Router.refresh.asURLRequest()
-            AF.request(request).responseDecodable(of: RefreshModel.self) { response in
+            AF.request(request).responseDecodable(of: Refresh.self) { response in
                 if response.response?.statusCode == 418 {
                     //rootViewController를 LoginViewController 전환 -> 로그인 해서 새로운 토큰 발급
                     //UserDefaults 제거
+                    //MARK: 함수화
+                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                    let navigationController = UINavigationController(rootViewController: SignInViewController())
+                    sceneDelegate?.window?.rootViewController = navigationController
+                    sceneDelegate?.window?.makeKeyAndVisible()
                     
                 }
                 switch response.result {

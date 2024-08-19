@@ -18,11 +18,13 @@ protocol TargetType: URLRequestConvertible {
     var body: Data? { get }
 }
 
+
 extension TargetType {
     func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL()
-        var request = try URLRequest(url: url.appendingPathComponent(path),
-                                     method: method)
+        var request = try URLRequest(url: url.appendingPathComponent(path).appending(queryItems: queryItems ?? [URLQueryItem(name: "error", value: "error")]),
+                                     method: method )
+
         request.allHTTPHeaderFields = header
         request.httpBody = body
         //MARK: Decoding 오류 원인!
