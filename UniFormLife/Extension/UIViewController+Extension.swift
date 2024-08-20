@@ -41,8 +41,7 @@ extension UIViewController {
     func goToRootView(rootView: UIViewController) {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        let navigationController = UINavigationController(rootViewController: rootView)
-        sceneDelegate?.window?.rootViewController = navigationController
+        sceneDelegate?.window?.rootViewController = rootView
         sceneDelegate?.window?.makeKeyAndVisible()
     }
     func showBasicAlert(_ title: String) {
