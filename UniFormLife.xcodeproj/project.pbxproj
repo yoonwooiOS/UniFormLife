@@ -23,14 +23,9 @@
 		99008D0A2C6CC2CA00DC836C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D092C6CC2CA00DC836C /* Color.swift */; };
 		99008D0C2C6CC31500DC836C /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D0B2C6CC31500DC836C /* Font.swift */; };
 		99008D112C6D958B00DC836C /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D102C6D958B00DC836C /* SignInViewController.swift */; };
-		99008D142C6D95A400DC836C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D132C6D95A400DC836C /* RxCocoa */; };
-		99008D162C6D95A400DC836C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D152C6D95A400DC836C /* RxSwift */; };
-		99008D1C2C6D95BC00DC836C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D1B2C6D95BC00DC836C /* SnapKit */; };
-		99008D1F2C6D95CF00DC836C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D1E2C6D95CF00DC836C /* Kingfisher */; };
-		99008D222C6D95DA00DC836C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D212C6D95DA00DC836C /* Toast */; };
 		99008D242C6D965600DC836C /* SignTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D232C6D965600DC836C /* SignTextField.swift */; };
 		99008D262C6D9A8600DC836C /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D252C6D9A8600DC836C /* BaseButton.swift */; };
-		99008D292C6D9E5500DC836C /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D282C6D9E5500DC836C /* EmailViewController.swift */; };
+		99008D292C6D9E5500DC836C /* EmailValidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D282C6D9E5500DC836C /* EmailValidViewController.swift */; };
 		99008D2D2C6DD65500DC836C /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D2C2C6DD65500DC836C /* PasswordViewController.swift */; };
 		99008D312C6DD7DB00DC836C /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D302C6DD7DB00DC836C /* NicknameViewController.swift */; };
 		99008D342C6DD89800DC836C /* BirthDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D332C6DD89800DC836C /* BirthDayViewController.swift */; };
@@ -38,11 +33,10 @@
 		99008D3D2C6DF8FD00DC836C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D3C2C6DF8FD00DC836C /* Router.swift */; };
 		99008D3F2C6DF95400DC836C /* UserDefaultsManeger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D3E2C6DF95400DC836C /* UserDefaultsManeger.swift */; };
 		99008D412C6DF97800DC836C /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D402C6DF97800DC836C /* TargetType.swift */; };
-		99008D432C6DF9D500DC836C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D422C6DF9D500DC836C /* Alamofire */; };
 		99008D452C6DF9FC00DC836C /* NetworkManeger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D442C6DF9FC00DC836C /* NetworkManeger.swift */; };
-		99008D482C6DFA1F00DC836C /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D472C6DFA1F00DC836C /* LoginModel.swift */; };
-		99008D4A2C6DFA3000DC836C /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D492C6DFA3000DC836C /* ProfileModel.swift */; };
-		99008D4C2C6DFA4800DC836C /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D4B2C6DFA4800DC836C /* RefreshModel.swift */; };
+		99008D482C6DFA1F00DC836C /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D472C6DFA1F00DC836C /* Login.swift */; };
+		99008D4A2C6DFA3000DC836C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D492C6DFA3000DC836C /* Profile.swift */; };
+		99008D4C2C6DFA4800DC836C /* Refresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D4B2C6DFA4800DC836C /* Refresh.swift */; };
 		99008D4E2C6DFA5100DC836C /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D4D2C6DFA5100DC836C /* FileModel.swift */; };
 		99008D512C6DFA8D00DC836C /* LoginQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D502C6DFA8D00DC836C /* LoginQuery.swift */; };
 		99008D532C6E0C9800DC836C /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D522C6E0C9800DC836C /* SignInViewModel.swift */; };
@@ -52,7 +46,20 @@
 		99008D602C6F430100DC836C /* UniformStyleFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D5F2C6F430100DC836C /* UniformStyleFeedViewController.swift */; };
 		99008D622C6F431600DC836C /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D612C6F431600DC836C /* AddPostViewController.swift */; };
 		99008D642C6F432B00DC836C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D632C6F432B00DC836C /* ProfileViewController.swift */; };
-		99008D662C70CCBB00DC836C /* ImportPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D652C70CCBB00DC836C /* ImportPostModel.swift */; };
+		99008D662C70CCBB00DC836C /* FetchPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D652C70CCBB00DC836C /* FetchPost.swift */; };
+		99008D682C716E5D00DC836C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D672C716E5D00DC836C /* Alamofire */; };
+		99008D6A2C716E6600DC836C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D692C716E6600DC836C /* SnapKit */; };
+		99008D6C2C716E7500DC836C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D6B2C716E7500DC836C /* RxCocoa */; };
+		99008D6E2C716E7500DC836C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D6D2C716E7500DC836C /* RxSwift */; };
+		99008D702C716E8300DC836C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D6F2C716E8300DC836C /* Kingfisher */; };
+		99008D722C71A3F300DC836C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D712C71A3F300DC836C /* User.swift */; };
+		99008D742C71A55000DC836C /* EmailValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D732C71A55000DC836C /* EmailValidViewModel.swift */; };
+		99008D762C71AE9700DC836C /* ValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D752C71AE9700DC836C /* ValidEmail.swift */; };
+		99008D782C71BEFD00DC836C /* LeagueFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */; };
+		99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */; };
+		9959C7162C74462D006208CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9959C7152C74462D006208CA /* GoogleService-Info.plist */; };
+		9959C7192C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		9959C71B2C744661006208CA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C71A2C744661006208CA /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,7 +83,7 @@
 		99008D102C6D958B00DC836C /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		99008D232C6D965600DC836C /* SignTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTextField.swift; sourceTree = "<group>"; };
 		99008D252C6D9A8600DC836C /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
-		99008D282C6D9E5500DC836C /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		99008D282C6D9E5500DC836C /* EmailValidViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidViewController.swift; sourceTree = "<group>"; };
 		99008D2C2C6DD65500DC836C /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
 		99008D302C6DD7DB00DC836C /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		99008D332C6DD89800DC836C /* BirthDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthDayViewController.swift; sourceTree = "<group>"; };
@@ -85,9 +92,9 @@
 		99008D3E2C6DF95400DC836C /* UserDefaultsManeger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManeger.swift; sourceTree = "<group>"; };
 		99008D402C6DF97800DC836C /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		99008D442C6DF9FC00DC836C /* NetworkManeger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManeger.swift; sourceTree = "<group>"; };
-		99008D472C6DFA1F00DC836C /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
-		99008D492C6DFA3000DC836C /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
-		99008D4B2C6DFA4800DC836C /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
+		99008D472C6DFA1F00DC836C /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		99008D492C6DFA3000DC836C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		99008D4B2C6DFA4800DC836C /* Refresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refresh.swift; sourceTree = "<group>"; };
 		99008D4D2C6DFA5100DC836C /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		99008D502C6DFA8D00DC836C /* LoginQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginQuery.swift; sourceTree = "<group>"; };
 		99008D522C6E0C9800DC836C /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
@@ -97,7 +104,13 @@
 		99008D5F2C6F430100DC836C /* UniformStyleFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformStyleFeedViewController.swift; sourceTree = "<group>"; };
 		99008D612C6F431600DC836C /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		99008D632C6F432B00DC836C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		99008D652C70CCBB00DC836C /* ImportPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPostModel.swift; sourceTree = "<group>"; };
+		99008D652C70CCBB00DC836C /* FetchPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPost.swift; sourceTree = "<group>"; };
+		99008D712C71A3F300DC836C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		99008D732C71A55000DC836C /* EmailValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidViewModel.swift; sourceTree = "<group>"; };
+		99008D752C71AE9700DC836C /* ValidEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidEmail.swift; sourceTree = "<group>"; };
+		99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListCollectionViewCell.swift; sourceTree = "<group>"; };
+		9959C7152C74462D006208CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,12 +118,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99008D222C6D95DA00DC836C /* Toast in Frameworks */,
-				99008D1C2C6D95BC00DC836C /* SnapKit in Frameworks */,
-				99008D162C6D95A400DC836C /* RxSwift in Frameworks */,
-				99008D432C6DF9D500DC836C /* Alamofire in Frameworks */,
-				99008D142C6D95A400DC836C /* RxCocoa in Frameworks */,
-				99008D1F2C6D95CF00DC836C /* Kingfisher in Frameworks */,
+				99008D6C2C716E7500DC836C /* RxCocoa in Frameworks */,
+				9959C7192C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				99008D682C716E5D00DC836C /* Alamofire in Frameworks */,
+				9959C71B2C744661006208CA /* FirebaseCrashlytics in Frameworks */,
+				99008D6E2C716E7500DC836C /* RxSwift in Frameworks */,
+				99008D6A2C716E6600DC836C /* SnapKit in Frameworks */,
+				99008D702C716E8300DC836C /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +164,7 @@
 				99008CDC2C6C985300DC836C /* AppDelegate.swift */,
 				99008CE52C6C985500DC836C /* Assets.xcassets */,
 				99008CE72C6C985500DC836C /* LaunchScreen.storyboard */,
+				9959C7152C74462D006208CA /* GoogleService-Info.plist */,
 				99008CEA2C6C985500DC836C /* Info.plist */,
 				99008D022C6C9DD600DC836C /* APIKey.swift */,
 			);
@@ -228,7 +243,8 @@
 		99008D272C6D9E3B00DC836C /* Email */ = {
 			isa = PBXGroup;
 			children = (
-				99008D282C6D9E5500DC836C /* EmailViewController.swift */,
+				99008D282C6D9E5500DC836C /* EmailValidViewController.swift */,
+				99008D732C71A55000DC836C /* EmailValidViewModel.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
@@ -284,11 +300,13 @@
 		99008D462C6DFA1800DC836C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				99008D472C6DFA1F00DC836C /* LoginModel.swift */,
-				99008D492C6DFA3000DC836C /* ProfileModel.swift */,
-				99008D4B2C6DFA4800DC836C /* RefreshModel.swift */,
+				99008D472C6DFA1F00DC836C /* Login.swift */,
+				99008D492C6DFA3000DC836C /* Profile.swift */,
+				99008D4B2C6DFA4800DC836C /* Refresh.swift */,
 				99008D4D2C6DFA5100DC836C /* FileModel.swift */,
-				99008D652C70CCBB00DC836C /* ImportPostModel.swift */,
+				99008D652C70CCBB00DC836C /* FetchPost.swift */,
+				99008D712C71A3F300DC836C /* User.swift */,
+				99008D752C71AE9700DC836C /* ValidEmail.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -337,6 +355,8 @@
 			isa = PBXGroup;
 			children = (
 				99008D5D2C6F42E800DC836C /* UniformListViewController.swift */,
+				99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */,
+				99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */,
 			);
 			path = UniformListViewController;
 			sourceTree = "<group>";
@@ -351,6 +371,7 @@
 				99008CD52C6C985300DC836C /* Sources */,
 				99008CD62C6C985300DC836C /* Frameworks */,
 				99008CD72C6C985300DC836C /* Resources */,
+				9959C71C2C744767006208CA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -358,12 +379,13 @@
 			);
 			name = UniFormLife;
 			packageProductDependencies = (
-				99008D132C6D95A400DC836C /* RxCocoa */,
-				99008D152C6D95A400DC836C /* RxSwift */,
-				99008D1B2C6D95BC00DC836C /* SnapKit */,
-				99008D1E2C6D95CF00DC836C /* Kingfisher */,
-				99008D212C6D95DA00DC836C /* Toast */,
-				99008D422C6DF9D500DC836C /* Alamofire */,
+				99008D672C716E5D00DC836C /* Alamofire */,
+				99008D692C716E6600DC836C /* SnapKit */,
+				99008D6B2C716E7500DC836C /* RxCocoa */,
+				99008D6D2C716E7500DC836C /* RxSwift */,
+				99008D6F2C716E8300DC836C /* Kingfisher */,
+				9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */,
+				9959C71A2C744661006208CA /* FirebaseCrashlytics */,
 			);
 			productName = UniFormLife;
 			productReference = 99008CD92C6C985300DC836C /* UniFormLife.app */;
@@ -399,6 +421,7 @@
 				99008D1A2C6D95BC00DC836C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				99008D1D2C6D95CF00DC836C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				99008D202C6D95DA00DC836C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				9959C7172C744661006208CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 99008CDA2C6C985300DC836C /* Products */;
 			projectDirPath = "";
@@ -415,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99008CE62C6C985500DC836C /* Assets.xcassets in Resources */,
+				9959C7162C74462D006208CA /* GoogleService-Info.plist in Resources */,
 				99008D012C6C9DBA00DC836C /* .gitignore in Resources */,
 				99008CE92C6C985500DC836C /* Base in Resources */,
 			);
@@ -422,34 +446,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9959C71C2C744767006208CA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		99008CD52C6C985300DC836C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99008D4C2C6DFA4800DC836C /* RefreshModel.swift in Sources */,
+				99008D4C2C6DFA4800DC836C /* Refresh.swift in Sources */,
 				99008D3B2C6DF8EA00DC836C /* Header.swift in Sources */,
 				99008CFF2C6C9B8600DC836C /* UIViewController+Extension.swift in Sources */,
 				99008D412C6DF97800DC836C /* TargetType.swift in Sources */,
 				99008D242C6D965600DC836C /* SignTextField.swift in Sources */,
 				99008D262C6D9A8600DC836C /* BaseButton.swift in Sources */,
-				99008D662C70CCBB00DC836C /* ImportPostModel.swift in Sources */,
+				99008D662C70CCBB00DC836C /* FetchPost.swift in Sources */,
 				99008D642C6F432B00DC836C /* ProfileViewController.swift in Sources */,
 				99008D622C6F431600DC836C /* AddPostViewController.swift in Sources */,
 				99008CF52C6C9A7100DC836C /* BaseViewController.swift in Sources */,
-				99008D292C6D9E5500DC836C /* EmailViewController.swift in Sources */,
+				99008D292C6D9E5500DC836C /* EmailValidViewController.swift in Sources */,
+				99008D762C71AE9700DC836C /* ValidEmail.swift in Sources */,
 				99008D312C6DD7DB00DC836C /* NicknameViewController.swift in Sources */,
 				99008D582C6F37D700DC836C /* Image.swift in Sources */,
 				99008D452C6DF9FC00DC836C /* NetworkManeger.swift in Sources */,
 				99008D072C6C9ED700DC836C /* UIColor+Extension.swift in Sources */,
-				99008D482C6DFA1F00DC836C /* LoginModel.swift in Sources */,
+				99008D482C6DFA1F00DC836C /* Login.swift in Sources */,
 				99008D052C6C9E5900DC836C /* ReuseIdentifier.swift in Sources */,
 				99008CDD2C6C985300DC836C /* AppDelegate.swift in Sources */,
+				99008D722C71A3F300DC836C /* User.swift in Sources */,
 				99008D532C6E0C9800DC836C /* SignInViewModel.swift in Sources */,
-				99008D4A2C6DFA3000DC836C /* ProfileModel.swift in Sources */,
+				99008D4A2C6DFA3000DC836C /* Profile.swift in Sources */,
 				99008D3F2C6DF95400DC836C /* UserDefaultsManeger.swift in Sources */,
+				99008D782C71BEFD00DC836C /* LeagueFilterCollectionViewCell.swift in Sources */,
+				99008D742C71A55000DC836C /* EmailValidViewModel.swift in Sources */,
 				99008D3D2C6DF8FD00DC836C /* Router.swift in Sources */,
 				99008D5E2C6F42E800DC836C /* UniformListViewController.swift in Sources */,
+				99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */,
 				99008CFC2C6C9B3100DC836C /* ViewModelType.swift in Sources */,
 				99008D602C6F430100DC836C /* UniformStyleFeedViewController.swift in Sources */,
 				99008D0C2C6CC31500DC836C /* Font.swift in Sources */,
@@ -607,6 +661,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Y2VDXSZQ3M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UniFormLife/Info.plist;
@@ -614,7 +669,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -646,7 +701,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,38 +783,51 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		9959C7172C744661006208CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		99008D132C6D95A400DC836C /* RxCocoa */ = {
+		99008D672C716E5D00DC836C /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 99008D122C6D95A400DC836C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
+			package = 99008D172C6D95B300DC836C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
-		99008D152C6D95A400DC836C /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 99008D122C6D95A400DC836C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		99008D1B2C6D95BC00DC836C /* SnapKit */ = {
+		99008D692C716E6600DC836C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 99008D1A2C6D95BC00DC836C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		99008D1E2C6D95CF00DC836C /* Kingfisher */ = {
+		99008D6B2C716E7500DC836C /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99008D122C6D95A400DC836C /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		99008D6D2C716E7500DC836C /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99008D122C6D95A400DC836C /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		99008D6F2C716E8300DC836C /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 99008D1D2C6D95CF00DC836C /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		99008D212C6D95DA00DC836C /* Toast */ = {
+		9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 99008D202C6D95DA00DC836C /* XCRemoteSwiftPackageReference "Toast-Swift" */;
-			productName = Toast;
+			package = 9959C7172C744661006208CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
-		99008D422C6DF9D500DC836C /* Alamofire */ = {
+		9959C71A2C744661006208CA /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 99008D172C6D95B300DC836C /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
+			package = 9959C7172C744661006208CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
