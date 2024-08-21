@@ -8,9 +8,10 @@ import Alamofire
 import RxSwift
 import UIKit
 
-struct NetworkManager {
-    private init() { }
-    static func callRequest<T: Decodable>(router: Router, completionHandler: @escaping (Result<T, Error>) -> Void) -> Void {
+final class NetworkManager {
+    static let shared = NetworkManager()
+    private init () { }
+     func callRequest<T: Decodable>(router: Router, completionHandler: @escaping (Result<T, Error>) -> Void) -> Void {
         do {
             let request = try router.asURLRequest()
             AF.request(request).responseDecodable(of: T.self) { response in
@@ -34,7 +35,7 @@ struct NetworkManager {
             completionHandler(.failure(error))
         }
     }
-    static func fetchPost(productID: String, fetchPostCompletionHandler: @escaping (Result<FetchPost, Error>) -> Void) -> Void {
+     func fetchPost(productID: String, fetchPostCompletionHandler: @escaping (Result<FetchPost, Error>) -> Void) -> Void {
         do {
             let query = productID
             let request = try Router.fetchPost(productID: query).asURLRequest()
@@ -58,10 +59,10 @@ struct NetworkManager {
         
     }
     
-    static func loginUser(email: String, password: String, loginCompletionHandler: @escaping (Result<Login, Error>) -> Void) -> Void {
+     func loginUser(email: String, password: String, loginCompletionHandler: @escaping (Result<Login, Error>) -> Void) -> Void {
         do {
             let query = LoginQuery(email: email, password: password)
-            let request = try Route    r.login(query: query).asURLRequest()
+            let request = try Router.login(query: query).asURLRequest()
             AF.request(request).responseDecodable(of: Login.self) { response in
                 switch response.result{
                 case .success(let success):
@@ -86,7 +87,7 @@ struct NetworkManager {
             print(error)
         }
     }
-    static func fetchProfile() {
+     func fetchProfile() {
         do {
             let request = try Router.fetchProfile.asURLRequest()
             AF.request(request).responseDecodable(of: Profile.self) { response in
@@ -105,7 +106,7 @@ struct NetworkManager {
             print(error, "fetchProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
         }
     }
-    static func editProfile(api: Router) {
+     func editProfile(api: Router) {
         do {
             let request = try Router.editProfile.asURLRequest()
             AF.request(request).responseDecodable(of: Profile.self) { response in
@@ -125,7 +126,7 @@ struct NetworkManager {
             print(error, "EditProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
         }
     }
-    static func refreshToken() {
+     func refreshToken() {
         do {
             let request = try Router.refresh.asURLRequest()
             AF.request(request).responseDecodable(of: Refresh.self) { response in
@@ -154,51 +155,3 @@ struct NetworkManager {
         }
     }
 }
-//enum APIError: Error {
-//    case invalidURL
-//    case unknownRespose
-//    case statusError
-//}
-//class NetworkManagers {
-//    static let shared = NetworkManagers()
-//    private init () { }
-//    func createLogin(email: String, password: String) -> Single<Result<LoginModel,APIError>> {
-//        return Single.create { observer -> Disposable in
-//            do {
-//                let query = LoginQuery(email: email, password: password)
-//                let request = try Router.login(query: query).asURLRequest()
-////                print(request.httpBody)
-//                print(email,password)
-//                AF.request(request)
-//    //                .responseString(completionHandler: { value in
-//    //                    print(value)
-//    //                })
-//                    .responseDecodable(of: LoginModel.self) { response in
-//                        switch response.result{
-//                        case .success(let success):
-//                            print(success)
-//    //                        UserDefaultsManeger.shared.token = success.access
-//    //                        UserDefaultsManeger.shared.refreshToken = success.refresh
-//    //                        let vc = ProfileViewController()
-//    //                        setRootViewController(vc)
-//                        case .failure(let failure):
-//                            print("fail", failure)
-//                            if response.response?.statusCode == 419 {
-//    //                             토큰 갱신
-////                                self.fetchProfile()
-//                            }
-//                        }
-//                    }
-//            } catch {
-//                print(error)
-//            }
-//            return Disposables.create()
-//        }
-//    }
-//
-//    func fetchProfile() {
-//
-//            // let request = try! Router.fetchProfile.asURLRequest()
-//
-//    }
-//}
