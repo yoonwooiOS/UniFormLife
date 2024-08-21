@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class UniformListViewController: BaseViewController {
     let leagueCollectionView = {
@@ -53,16 +54,26 @@ final class UniformListViewController: BaseViewController {
         return layout
     }
     let disposeBag = DisposeBag()
-    let list = Observable.just(["pl","llg","il","fl", "kl", "others","pl","llg","il","fl", "na", "others","pl","llg","il","fl", "na", "others" ])
+    var list = Observable.just(["pl","llg","il","pl1", "kl", "kr","pl","llg","il","pl1", "kl", "kr"])
+    var listdata = PublishRelay<[FetchPost]>()
+    let viewModel = UniformListViewModel()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     override func bind() {
+        let input = UniformListViewModel.Input(viewdidLoadTrigger: Observable.just(()))
+        let output = viewModel.transfrom(input: input)
+        
         list
             .bind(to: leagueCollectionView.rx.items(cellIdentifier: LeagueFilterCollectionViewCell.identifier, cellType: LeagueFilterCollectionViewCell.self)) { (row, element, cell) in
                 
                 cell.leagueImageView.image = UIImage(named: element)
+                
             }
             .disposed(by: disposeBag)
-        list
+        output.uniformListData
             .bind(to: uniformListCollectionView.rx.items(cellIdentifier: UniformListCollectionViewCell.identifier, cellType: UniformListCollectionViewCell.self)) {(row, element, cell) in
+                cell.titleLabel.text = element.title
                 
             }
             .disposed(by: disposeBag)
