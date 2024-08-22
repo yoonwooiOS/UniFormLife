@@ -18,6 +18,7 @@ struct FetchPost: Decodable {
 
 struct PostData: Decodable {
     let post_id: String
+    let price: Int
     let product_id: String
     let title: String
     let content: String
