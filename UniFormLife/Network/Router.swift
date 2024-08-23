@@ -19,6 +19,16 @@ enum Router: TargetType {
     case uploadPostImage
     case uploadPost
     case fetchPost(productID: String)
+    case fetchspecificPost
+    case editPost(data: EditPostQuery)
+    case deletePost(postID: String)
+    case fetchUserPost(userID: String)
+    case createComment(postID: String)
+    case editComment(postID: String, commentID: String)
+    case deleteComment(postID: String, commentID: String)
+    case likePost(postID: String)
+    
+    
     
     var method: Alamofire.HTTPMethod {
         switch self {
@@ -42,6 +52,22 @@ enum Router: TargetType {
             return .post
         case .fetchPost:
             return .get
+        case .fetchspecificPost:
+            return .get
+        case .editPost(data: let data):
+            return .put
+        case .deletePost(postID: let postID):
+            return .delete
+        case .fetchUserPost(userID: let userID):
+            return .get
+        case .createComment(postID: let postID):
+            return .post
+        case .editComment(postID: let PosdtID):
+            return .put
+        case .deleteComment(postID: let postID, commentID: let commentID):
+            return .delete
+        case .likePost(postID: let postID):
+            return .post
         }
     }
     
@@ -67,6 +93,12 @@ enum Router: TargetType {
             let encoding = JSONEncoder()
             let query = ["email": email]
             return try? encoding.encode(query)
+        case .editPost(let data):
+            let encoding = JSONEncoder()
+            return try? encoding.encode(data)
+        case .createComment(let postID):
+            let encoding = JSONEncoder()
+            return try? encoding.encode(postID)
         default:
             return nil
         }
@@ -96,6 +128,22 @@ extension Router {
             return "posts"
         case .fetchPost:
             return "posts"
+        case .fetchspecificPost:
+            return "posts/:id"
+        case .editPost:
+            return "posts/:id"
+        case .deletePost(postID: let postID):
+            return "posts/\(postID)"
+        case .fetchUserPost(userID: let userID):
+            return "posts/:\(userID)"
+        case .createComment(postID: let postID):
+            return "posts/\(postID)/comments"
+        case .editComment(postID: let postID, commentID: let commentID):
+            return "posts/\(postID)/comments/\(commentID)"
+        case .deleteComment(postID: let postID, commentID: let commentID):
+            return "posts/\(postID)/comments/\(commentID)"
+        case .likePost(postID: let postID):
+            return "posts/\(postID)/like"
         }
     }
     var header: [String: String] {
@@ -154,6 +202,51 @@ extension Router {
                 Header.sesacKey.rawValue : APIKey.key
             ]
         case .fetchPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        
+        case .fetchspecificPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        case .editPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: APIKey.key
+            ]
+        case .deletePost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        case .fetchUserPost(userID: let userID):
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        case .createComment(postID: let postID):
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: APIKey.key
+            ]
+        case .editComment(postID: let postID, commentID: let commentID):
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: APIKey.key
+            ]
+        case .deleteComment(postID: let postID, commentID: let commentID):
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue: APIKey.key
+            ]
+        case .likePost(postID: let postID):
             return [
                 Header.authorization.rawValue: UserDefaultsManeger.shared.token,
                 Header.sesacKey.rawValue : APIKey.key
