@@ -23,8 +23,8 @@ final class HomeTabBarController: UITabBarController {
         uniformList.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.uniformList, tag: 0)
         
         let feedVC = UniformStyleFeedViewController()
-        let feed = UINavigationController(rootViewController: feedVC)
-        feed.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.feed, tag: 1)
+//        let feed = UINavigationController(rootViewController: feedVC)
+//        feedVC.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.feed, tag: 1)
        
         let addPostVC = AddPostViewController()
         let addPost = UINavigationController(rootViewController: addPostVC)
