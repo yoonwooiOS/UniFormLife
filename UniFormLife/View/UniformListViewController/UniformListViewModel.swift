@@ -11,31 +11,38 @@ import RxCocoa
 
 class UniformListViewModel: ViewModelType {
     let disposeBag = DisposeBag()
+    let continentalLeague = Observable.just(["pl","llg","il","pl1", "kl", "kr","pl","llg","il","pl1", "kl", "kr"])
     struct Input {
         let viewdidLoadTrigger: Observable<Void>
     }
     struct Output {
         let uniformListData: PublishRelay<[PostData]>
+        let continentalLeague: Observable<[String]>
     }
     func transfrom(input: Input) -> Output {
         let uniformListData = PublishRelay<[PostData]>()
         input.viewdidLoadTrigger
-            .bind(with: self) { owner, value in
-                NetworkManager.shared.fetchPost(productID: "premierLeague") { result in
-                    switch result {
-                    case .success(let fetchPost):
-                        print(fetchPost)
-                        uniformListData.accept(fetchPost.data)
-                        NetworkManager.shared.callRequest(router: <#T##Router#>, completionHandler: <#T##(Result<Decodable, any Error>) -> Void#>)
-                    case .failure(let error):
-                        // 에러를 처리합니다.
-                        print("Error fetching post: \(error)")
-                    }
+            .do(onNext: {
+                   print("viewdidLoadTrigger was triggered")
+               })
+            .flatMapLatest {
+                NetworkManager.shared.callRequest(router: .fetchPost(productID: "ligue1"), type: FetchPost.self)
+                          .do(onSuccess: { result in
+                              print(result,"dasdsad")
+                          })
+                  }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let value):
+                    print(value,"😍😍😍😍😍😍😍")
+                    uniformListData.accept(value.data)
+                    
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
             }
             .disposed(by: disposeBag)
-        return Output(uniformListData: uniformListData)
+        return Output(uniformListData: uniformListData, continentalLeague: continentalLeague)
     }
-    
     
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+import Kingfisher
 final class UniformListCollectionViewCell: BaseCollectionViewCell {
     let baseView = {
         let view = UIView()
@@ -15,7 +15,8 @@ final class UniformListCollectionViewCell: BaseCollectionViewCell {
     }()
     let uniformImageView = {
         let view = UIImageView()
-        
+        view.contentMode = .scaleToFill
+        //        view.backgroundColor = Color.darkGray
         return view
     }()
     let titleLabel = {
@@ -40,20 +41,35 @@ final class UniformListCollectionViewCell: BaseCollectionViewCell {
     }
     override func setUpLayout() {
         uniformImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(4)
-            make.size.equalTo(60)
+            make.top.horizontalEdges.equalToSuperview()
+            make.height.equalTo(120)
         }
         baseView.snp.makeConstraints { make in
-            make.verticalEdges.trailing.equalTo(contentView.safeAreaLayoutGuide)
-            make.leading.equalTo(uniformImageView.snp.trailing).offset(8)
-        }
-        titleLabel.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(4)
-            make.height.equalTo(20)
-        }
-        usedLabel.snp.makeConstraints { make in
+           
             
         }
+        titleLabel.snp.makeConstraints { make in
+           
+        }
+        priceLabel.snp.makeConstraints { make in
+           
+        }
+    }
+    func setUpCell(data: PostData) {
+        titleLabel.text = data.title
+        
+        priceLabel.text = data.price.formatted() + "원"
+        let imageDownloadRequest = AnyModifier { request in
+            var request = request
+            request.setValue(UserDefaultsManeger.shared.token, forHTTPHeaderField: "Authorization")
+            request.setValue(APIKey.key, forHTTPHeaderField: "SesacKey")
+            return request
+        }
+        guard let url = URL(string: APIKey.baseURL + "v1/" + data.files[0] ) else {
+            print("Invalid URL")
+            return
+        }
+        uniformImageView.kf.setImage(with: url, options: [.requestModifier(imageDownloadRequest)])
+        
     }
 }

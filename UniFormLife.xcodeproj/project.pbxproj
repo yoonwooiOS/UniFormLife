@@ -52,11 +52,12 @@
 		99008D6C2C716E7500DC836C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D6B2C716E7500DC836C /* RxCocoa */; };
 		99008D6E2C716E7500DC836C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D6D2C716E7500DC836C /* RxSwift */; };
 		99008D702C716E8300DC836C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 99008D6F2C716E8300DC836C /* Kingfisher */; };
-		99008D722C71A3F300DC836C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D712C71A3F300DC836C /* User.swift */; };
 		99008D742C71A55000DC836C /* EmailValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D732C71A55000DC836C /* EmailValidViewModel.swift */; };
 		99008D762C71AE9700DC836C /* ValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D752C71AE9700DC836C /* ValidEmail.swift */; };
 		99008D782C71BEFD00DC836C /* LeagueFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */; };
 		99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */; };
+		992F6BA62C76280900C59543 /* UniformListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BA52C76280900C59543 /* UniformListViewModel.swift */; };
+		992F6BB52C77552000C59543 /* EditPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB42C77552000C59543 /* EditPostQuery.swift */; };
 		9959C7162C74462D006208CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9959C7152C74462D006208CA /* GoogleService-Info.plist */; };
 		9959C7192C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		9959C71B2C744661006208CA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C71A2C744661006208CA /* FirebaseCrashlytics */; };
@@ -105,11 +106,12 @@
 		99008D612C6F431600DC836C /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		99008D632C6F432B00DC836C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		99008D652C70CCBB00DC836C /* FetchPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPost.swift; sourceTree = "<group>"; };
-		99008D712C71A3F300DC836C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99008D732C71A55000DC836C /* EmailValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidViewModel.swift; sourceTree = "<group>"; };
 		99008D752C71AE9700DC836C /* ValidEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidEmail.swift; sourceTree = "<group>"; };
 		99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListCollectionViewCell.swift; sourceTree = "<group>"; };
+		992F6BA52C76280900C59543 /* UniformListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListViewModel.swift; sourceTree = "<group>"; };
+		992F6BB42C77552000C59543 /* EditPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostQuery.swift; sourceTree = "<group>"; };
 		9959C7152C74462D006208CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -305,7 +307,6 @@
 				99008D4B2C6DFA4800DC836C /* Refresh.swift */,
 				99008D4D2C6DFA5100DC836C /* FileModel.swift */,
 				99008D652C70CCBB00DC836C /* FetchPost.swift */,
-				99008D712C71A3F300DC836C /* User.swift */,
 				99008D752C71AE9700DC836C /* ValidEmail.swift */,
 			);
 			path = Model;
@@ -315,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				99008D502C6DFA8D00DC836C /* LoginQuery.swift */,
+				992F6BB42C77552000C59543 /* EditPostQuery.swift */,
 			);
 			path = LoginQuery;
 			sourceTree = "<group>";
@@ -357,6 +359,7 @@
 				99008D5D2C6F42E800DC836C /* UniformListViewController.swift */,
 				99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */,
 				99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */,
+				992F6BA52C76280900C59543 /* UniformListViewModel.swift */,
 			);
 			path = UniformListViewController;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				99008D412C6DF97800DC836C /* TargetType.swift in Sources */,
 				99008D242C6D965600DC836C /* SignTextField.swift in Sources */,
 				99008D262C6D9A8600DC836C /* BaseButton.swift in Sources */,
+				992F6BA62C76280900C59543 /* UniformListViewModel.swift in Sources */,
 				99008D662C70CCBB00DC836C /* FetchPost.swift in Sources */,
 				99008D642C6F432B00DC836C /* ProfileViewController.swift in Sources */,
 				99008D622C6F431600DC836C /* AddPostViewController.swift in Sources */,
@@ -495,7 +499,6 @@
 				99008D482C6DFA1F00DC836C /* Login.swift in Sources */,
 				99008D052C6C9E5900DC836C /* ReuseIdentifier.swift in Sources */,
 				99008CDD2C6C985300DC836C /* AppDelegate.swift in Sources */,
-				99008D722C71A3F300DC836C /* User.swift in Sources */,
 				99008D532C6E0C9800DC836C /* SignInViewModel.swift in Sources */,
 				99008D4A2C6DFA3000DC836C /* Profile.swift in Sources */,
 				99008D3F2C6DF95400DC836C /* UserDefaultsManeger.swift in Sources */,
@@ -515,6 +518,7 @@
 				99008CDF2C6C985300DC836C /* SceneDelegate.swift in Sources */,
 				99008D4E2C6DFA5100DC836C /* FileModel.swift in Sources */,
 				99008D0A2C6CC2CA00DC836C /* Color.swift in Sources */,
+				992F6BB52C77552000C59543 /* EditPostQuery.swift in Sources */,
 				99008D032C6C9DD600DC836C /* APIKey.swift in Sources */,
 				99008CF92C6C9AB300DC836C /* BaseCollectionViewCell.swift in Sources */,
 				99008D2D2C6DD65500DC836C /* PasswordViewController.swift in Sources */,
@@ -569,7 +573,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

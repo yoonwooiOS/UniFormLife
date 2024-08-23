@@ -42,20 +42,20 @@ final class UniformListViewController: BaseViewController {
         return layout
     }
     static func uniformLayout() -> UICollectionViewLayout {
-        let sectionSpacing: CGFloat = 12
-        let cellSpacing: CGFloat = 8
-//        let size = UIScreen.main.bounds.width -  (cellSpacing)
+        let sectionSpacing: CGFloat = 4
+        let cellSpacing: CGFloat = 4
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 360, height: 160)
+        layout.itemSize = CGSize(width: 176, height: 200)
         layout.scrollDirection = .vertical // 가로 간격
         layout.minimumLineSpacing = cellSpacing // 세로 간격
         layout.minimumInteritemSpacing = cellSpacing
         layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
-        return layout
+//
+            return layout
     }
+ 
+    
     let disposeBag = DisposeBag()
-    var list = Observable.just(["pl","llg","il","pl1", "kl", "kr","pl","llg","il","pl1", "kl", "kr"])
-    var listdata = PublishRelay<[FetchPost]>()
     let viewModel = UniformListViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,17 +64,15 @@ final class UniformListViewController: BaseViewController {
         let input = UniformListViewModel.Input(viewdidLoadTrigger: Observable.just(()))
         let output = viewModel.transfrom(input: input)
         
-        list
+        output.continentalLeague
             .bind(to: leagueCollectionView.rx.items(cellIdentifier: LeagueFilterCollectionViewCell.identifier, cellType: LeagueFilterCollectionViewCell.self)) { (row, element, cell) in
-                
                 cell.leagueImageView.image = UIImage(named: element)
-                
             }
             .disposed(by: disposeBag)
         output.uniformListData
             .bind(to: uniformListCollectionView.rx.items(cellIdentifier: UniformListCollectionViewCell.identifier, cellType: UniformListCollectionViewCell.self)) {(row, element, cell) in
-                cell.titleLabel.text = element.title
-                
+                print("Row: \(row), Element: \(element)")
+                cell.setUpCell(data: element)
             }
             .disposed(by: disposeBag)
     }
