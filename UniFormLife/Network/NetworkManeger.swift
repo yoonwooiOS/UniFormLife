@@ -4,59 +4,65 @@
 //
 //  Created by 김윤우 on 8/15/24.
 //
+
+import UIKit
 import Alamofire
 import RxSwift
-import UIKit
 
 final class NetworkManager {
     static let shared = NetworkManager()
     private init () { }
-     func callRequest<T: Decodable>(router: Router, completionHandler: @escaping (Result<T, Error>) -> Void) -> Void {
-        do {
-            let request = try router.asURLRequest()
-            AF.request(request).responseDecodable(of: T.self) { response in
-                switch response.result {
-                case .success(let success):
-                    if let loginModel = success as? Login {
-                        UserDefaultsManeger.shared.token = loginModel.access
-                        UserDefaultsManeger.shared.refreshToken = loginModel.refresh
-                    }
-                    completionHandler(.success(success))
-                case .failure(let failure):
-                    print("fail", failure)
-                    if response.response?.statusCode == 419 {
-                        self.fetchProfile()
-                    }
-                    completionHandler(.failure(failure))
-                }
-            }
-        } catch {
-            print(error)
-            completionHandler(.failure(error))
-        }
-    }
-     func fetchPost(productID: String, fetchPostCompletionHandler: @escaping (Result<FetchPost, Error>) -> Void) -> Void {
-        do {
-            let query = productID
-            let request = try Router.fetchPost(productID: query).asURLRequest()
-            AF.request(request).responseDecodable(of: FetchPost.self) { response in
-                if response.response?.statusCode == 419 {
-                    self.refreshToken()
-                } else {
+    func callRequest<T: Decodable>(router: Router, type: T.Type) -> Single<Result<T, Error>> {
+        return Single.create { observer -> Disposable in
+            do {
+                let request = try router.asURLRequest()
+                AF.request(request).responseDecodable(of: T.self) { response in
                     switch response.result {
                     case .success(let success):
-//                        print(success)
-                        fetchPostCompletionHandler(.success(success))
+                       print(success,"callrequest")
+                        observer(.success(.success(success)))
                     case .failure(let failure):
-                        print(failure)
-                        fetchPostCompletionHandler(.failure(failure))
+                        print("fail", failure)
+                        observer(.success(.failure(failure)))
+                        if response.response?.statusCode == 419 {
+                            self.fetchProfile()
+                        }
                     }
                 }
+            } catch {
+                print(error)
             }
-        } catch {
-            print(error, "fetchProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
+            return Disposables.create()
         }
-        
+    }
+    func fetchPost(productID: String) -> Single<Result<FetchPost, Error>> {
+        return Single.create { observer -> Disposable in
+            do {
+                let query = productID
+                let request = try Router.fetchPost(productID: query).asURLRequest()
+                
+                AF.request(request).responseDecodable(of: FetchPost.self) { response in
+                    if response.response?.statusCode == 419 {
+                        self.refreshToken()
+                    } else {
+                        switch response.result {
+                        case .success(let success):
+                            dump(success)
+                            observer(.success(.success(success)))
+                        case .failure(let failure):
+                            print(failure)
+                            observer(.success(.failure(failure)))
+                        }
+                    }
+                }
+            } catch {
+                print(error, "fetchProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
+                observer(.success(.failure(error)))
+            }
+            
+            return Disposables.create()
+        }
+        .debug("fetchPost")
     }
     
      func loginUser(email: String, password: String, loginCompletionHandler: @escaping (Result<Login, Error>) -> Void) -> Void {

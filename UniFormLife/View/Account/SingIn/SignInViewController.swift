@@ -11,10 +11,15 @@ import RxSwift
 import RxCocoa
 
 final class SignInViewController: BaseViewController {
-    private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
+    private let emailTextField = {
+        let view = SignTextField(placeholderText: "이메일을 입력해주세요")
+        view.text = "yw1@test.com"
+        return view
+    }()
     private let passwordTextField = {
-        let button = SignTextField(placeholderText: "비밀번호를 입력해주세요")
-        return button
+        let view = SignTextField(placeholderText: "비밀번호를 입력해주세요")
+        view.text = "12345"
+        return view
     }()
     private let signInButton = BaseButton(title: "로그인")
     private let signUpButton = {
@@ -29,9 +34,12 @@ final class SignInViewController: BaseViewController {
     }
     private let disposeBag = DisposeBag()
     let signInViewModel = SignInViewModel()
-    // input : email,
-    override func bind() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+    }
+    override func bind() {
+            
         let input = SignInViewModel.Input(signInButtonTap: signInButton.rx.tap, signUpButtonTap: signUpButton.rx.tap, eamilText: emailTextField.rx.text.orEmpty, passwordText: passwordTextField.rx.text.orEmpty)
         
         let output = signInViewModel.transfrom(input: input)

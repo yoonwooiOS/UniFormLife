@@ -11,6 +11,7 @@ import RxCocoa
 
 class SignInViewModel: ViewModelType {
    let disposeBag = DisposeBag()
+    
     struct Input {
         let signInButtonTap: ControlEvent<Void>
         let signUpButtonTap: ControlEvent<Void>
@@ -18,14 +19,14 @@ class SignInViewModel: ViewModelType {
         let passwordText: ControlProperty<String>
     }
     struct Output {
-        let createLoginValid: PublishSubject<Result<LoginModel, Error>>
+        let createLoginValid: PublishSubject<Result<Login, Error>>
         let signUpButtonTap: ControlEvent<Void>
     }
     
     func transfrom(input: Input) -> Output {
         let eamilText = BehaviorRelay<String>(value: "")
         let passwordText = BehaviorRelay<String>(value: "")
-        let createLoginValid = PublishSubject<Result<LoginModel, Error>>()
+        let createLoginValid = PublishSubject<Result<Login, Error>>()
         input.eamilText
             .bind { text in
                 eamilText.accept(text)
@@ -40,7 +41,7 @@ class SignInViewModel: ViewModelType {
             .bind(with: self) { owner, _ in
                 print(eamilText.value)
                 print(passwordText.value)
-                NetworkManager.loginUser(email: eamilText.value, password: passwordText.value) { result in
+                NetworkManager.shared.loginUser(email: eamilText.value, password: passwordText.value) { result in
                     switch result {
                     case .success(let value):
                         dump(value)
