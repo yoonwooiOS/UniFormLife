@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
 //        let vc = UINavigationController(rootViewController: HomeTabBarController())
-        let vc = HomeTabBarController()
+        let vc = SignInViewController()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }

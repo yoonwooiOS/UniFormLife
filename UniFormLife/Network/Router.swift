@@ -26,7 +26,7 @@ enum Router: TargetType {
     case createComment(postID: String)
     case editComment(postID: String, commentID: String)
     case deleteComment(postID: String, commentID: String)
-    case likePost(postID: String)
+    case likePost(postID: String, likeState: Bool)
     
     
     
@@ -66,7 +66,7 @@ enum Router: TargetType {
             return .put
         case .deleteComment(postID: let postID, commentID: let commentID):
             return .delete
-        case .likePost(postID: let postID):
+        case .likePost(postID: let postID, likeState: let likeState):
             return .post
         }
     }
@@ -99,6 +99,9 @@ enum Router: TargetType {
         case .createComment(let postID):
             let encoding = JSONEncoder()
             return try? encoding.encode(postID)
+        case .likePost(_, let likeState):
+            let encoding = JSONEncoder()
+            return try? encoding.encode(likeState)
         default:
             return nil
         }
@@ -249,7 +252,8 @@ extension Router {
         case .likePost(postID: let postID):
             return [
                 Header.authorization.rawValue: UserDefaultsManeger.shared.token,
-                Header.sesacKey.rawValue : APIKey.key
+                        Header.contentType.rawValue: Header.json.rawValue,
+                        Header.sesacKey.rawValue : APIKey.key
             ]
         }
     }
