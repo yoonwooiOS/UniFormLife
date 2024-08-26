@@ -14,59 +14,126 @@ import Then
 final class UniformListDetailViewController: BaseViewController {
     var postData: PostData?
     private let imageNames = ["man1", "man2", "man3"]
+    
+    private let baseScrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = true
+        $0.bounces = true
+    }
+    
+    private let contentView = UIView()
+    
     private let scrollView = UIScrollView().then {
         $0.isPagingEnabled = true
         $0.showsHorizontalScrollIndicator = false
         $0.bounces = false
     }
+    
     private let pageControl = UIPageControl().then {
         $0.currentPage = 0
         $0.pageIndicatorTintColor = .lightGray
         $0.currentPageIndicatorTintColor = .black
     }
-    private let userProfileBaseView = UIView().then {
-        $0.backgroundColor = .blue
-    }
+    private let userProfileBaseView = UIView().then { _ in }
     private let userProfileImageView = UIImageView().then {
-        $0.contentMode = .scaleToFill
+        $0.contentMode = .scaleAspectFill
+        $0.image = UIImage(named: "son")
+        $0.backgroundColor = .green
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 4
+        $0.layer.cornerRadius = 30
     }
     private lazy var userNicknameLabel = UILabel().then {
         $0.text = postData?.creator.nick
+        $0.font = Font.bold14
+        //        $0.backgroundColor = .blue
     }
     private let likeButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "heart"), for: .normal)
-        $0.tintColor = Color.lightGray
+        $0.tintColor = Color.black
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .large)
+        $0.setImage(UIImage(systemName: "heart", withConfiguration: largeConfig), for: .normal)
+    }
+    private let followersLabel = UILabel().then {
+        $0.text = "팔로워 184명"
+        $0.textColor = Color.gray
+        $0.font = Font.regular12
+    }
+    private let postCount = UILabel().then {
+        $0.text = "게시글 30개"
+        $0.textColor = Color.gray
+        $0.font = Font.regular12
+    }
+    private let seperator = {
+        let view = UIView()
+        view.backgroundColor = Color.lightGray
+        return view
+    }()
+    private let mainBaseView = UIView().then {
+        $0.backgroundColor = .green
+    }
+    private lazy var postTitle = UILabel().then {
+        $0.font = Font.bold18
     }
     private let disposeBag = DisposeBag()
+    private let viewModel = UniformListDetailViewModel()
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         navigationController?.navigationBar.prefersLargeTitles = true
-        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpImages()
         setUpImageBinding()
+        guard let postData else { return }
+        postTitle.text = postData.title
+        
+        
     }
+    
     override func bind() {
+        let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap)
+        let output = viewModel.transfrom(input: input)
+        output.isLiked
+            .bind(with: self, onNext: { owner, isLiked in
+//                print(isLiked)
+                let imageName = isLiked ? "heart.fill" : "heart"
+                owner.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
+                owner.likeButton.tintColor = isLiked ? .red : .lightGray
+            })
+            .disposed(by: disposeBag)
+        
         scrollView.rx.contentOffset
-            .map { Int($0.x / self.view.frame.width) } // 현재 페이지 인덱스 계산
+            .map { Int($0.x / self.view.frame.width) }
             .bind(to: pageControl.rx.currentPage)
             .disposed(by: disposeBag)
     }
+    
     override func setUpHierarchy() {
-        [scrollView, pageControl, userProfileBaseView].forEach {
+        [baseScrollView, seperator, mainBaseView].forEach {
             view.addSubview($0)
         }
-        [userProfileImageView, userNicknameLabel, likeButton].forEach {
+        baseScrollView.addSubview(contentView)
+        [scrollView, pageControl, userProfileBaseView].forEach {
+            contentView.addSubview($0)
+        }
+        [userProfileImageView, userNicknameLabel, likeButton, followersLabel, postCount].forEach {
             userProfileBaseView.addSubview($0)
         }
+        [postTitle].forEach {
+            mainBaseView.addSubview($0)
+        }
     }
+    
     override func setUpLayout() {
+        let leadingOffset = 8
+        baseScrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(contentView.snp.top)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(view.frame.height * 0.4)
         }
@@ -75,11 +142,48 @@ final class UniformListDetailViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         userProfileBaseView.snp.makeConstraints { make in
-            make.top.equalTo(scrollView.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(4)
-            make.height.equalTo(60)
+            make.top.equalTo(pageControl.snp.bottom).offset(leadingOffset)
+            make.horizontalEdges.equalToSuperview().inset(4)
+            make.height.equalTo(68)
         }
-        
+        userProfileImageView.snp.makeConstraints { make in
+            make.leading.equalTo(userProfileBaseView).offset(leadingOffset)
+            make.centerY.equalTo(userProfileBaseView)
+            make.size.equalTo(60)
+        }
+        userNicknameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(7)
+            make.top.equalTo(userProfileImageView.snp.top)
+        }
+        likeButton.snp.makeConstraints { make in
+            make.trailing.equalTo(userProfileBaseView).inset(leadingOffset)
+            make.centerY.equalTo(userProfileImageView)
+            make.size.equalTo(60)
+        }
+        followersLabel.snp.makeConstraints { make in
+            make.top.equalTo(userNicknameLabel.snp.bottom).offset(2)
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(leadingOffset)
+        }
+        postCount.snp.makeConstraints { make in
+            make.top.equalTo(followersLabel.snp.bottom).offset(2)
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(leadingOffset)
+        }
+        seperator.snp.makeConstraints { make in
+            make.top.equalTo(userProfileBaseView.snp.bottom).offset(16)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(leadingOffset)
+            make.height.equalTo(1)
+        }
+        mainBaseView.snp.makeConstraints { make in
+            make.top.equalTo(seperator.snp.bottom)
+            make.horizontalEdges.bottom.equalToSuperview()
+        }
+        postTitle.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalToSuperview().offset(leadingOffset)
+            
+        }
+        contentView.snp.makeConstraints { make in
+            make.bottom.equalTo(userProfileBaseView.snp.bottom).offset(500)
+        }
     }
     
     private func setUpImages() {
@@ -111,7 +215,7 @@ final class UniformListDetailViewController: BaseViewController {
     
     private func setUpImageBinding() {
         scrollView.rx.contentOffset
-            .map { Int($0.x / self.view.frame.width) } // 현재 페이지 인덱스 계산
+            .map { Int($0.x / self.view.frame.width) }
             .bind(to: pageControl.rx.currentPage)
             .disposed(by: disposeBag)
     }
