@@ -62,6 +62,8 @@
 		992F6BB92C7968A800C59543 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB82C7968A800C59543 /* CollectionView.swift */; };
 		992F6BBC2C79A9F000C59543 /* UniformListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */; };
 		992F6BBF2C79ABC200C59543 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 992F6BBE2C79ABC200C59543 /* Then */; };
+		992F6BC82C7C98A600C59543 /* UniformListDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */; };
+		992F6BCA2C7CABCA00C59543 /* LikePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BC92C7CABCA00C59543 /* LikePost.swift */; };
 		9959C7162C74462D006208CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9959C7152C74462D006208CA /* GoogleService-Info.plist */; };
 		9959C7192C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		9959C71B2C744661006208CA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C71A2C744661006208CA /* FirebaseCrashlytics */; };
@@ -119,6 +121,8 @@
 		992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaddingLabel.swift; sourceTree = "<group>"; };
 		992F6BB82C7968A800C59543 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListDetailViewController.swift; sourceTree = "<group>"; };
+		992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListDetailViewModel.swift; sourceTree = "<group>"; };
+		992F6BC92C7CABCA00C59543 /* LikePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikePost.swift; sourceTree = "<group>"; };
 		9959C7152C74462D006208CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -318,6 +322,7 @@
 				99008D4D2C6DFA5100DC836C /* FileModel.swift */,
 				99008D652C70CCBB00DC836C /* FetchPost.swift */,
 				99008D752C71AE9700DC836C /* ValidEmail.swift */,
+				992F6BC92C7CABCA00C59543 /* LikePost.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */,
+				992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -514,11 +520,13 @@
 				99008D292C6D9E5500DC836C /* EmailValidViewController.swift in Sources */,
 				99008D762C71AE9700DC836C /* ValidEmail.swift in Sources */,
 				99008D312C6DD7DB00DC836C /* NicknameViewController.swift in Sources */,
+				992F6BC82C7C98A600C59543 /* UniformListDetailViewModel.swift in Sources */,
 				99008D582C6F37D700DC836C /* Image.swift in Sources */,
 				99008D452C6DF9FC00DC836C /* NetworkManeger.swift in Sources */,
 				992F6BB72C79663D00C59543 /* AddPaddingLabel.swift in Sources */,
 				99008D072C6C9ED700DC836C /* UIColor+Extension.swift in Sources */,
 				99008D482C6DFA1F00DC836C /* Login.swift in Sources */,
+				992F6BCA2C7CABCA00C59543 /* LikePost.swift in Sources */,
 				99008D052C6C9E5900DC836C /* ReuseIdentifier.swift in Sources */,
 				992F6BBC2C79A9F000C59543 /* UniformListDetailViewController.swift in Sources */,
 				99008CDD2C6C985300DC836C /* AppDelegate.swift in Sources */,
