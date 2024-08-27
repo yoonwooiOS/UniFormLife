@@ -100,8 +100,9 @@ enum Router: TargetType {
             let encoding = JSONEncoder()
             return try? encoding.encode(postID)
         case .likePost(_, let likeState):
+            let params: [String: Bool] = ["like_status": likeState]
             let encoding = JSONEncoder()
-            return try? encoding.encode(likeState)
+            return try? encoding.encode(params)
         default:
             return nil
         }
@@ -145,9 +146,9 @@ extension Router {
             return "posts/\(postID)/comments/\(commentID)"
         case .deleteComment(postID: let postID, commentID: let commentID):
             return "posts/\(postID)/comments/\(commentID)"
-        case .likePost(postID: let postID):
-            return "posts/\(postID)/like"
-        }
+        case .likePost(let postID, _):
+                return "posts/\(postID)/like"
+            }
     }
     var header: [String: String] {
         switch self {
@@ -249,11 +250,11 @@ extension Router {
                 Header.contentType.rawValue: Header.json.rawValue,
                 Header.sesacKey.rawValue: APIKey.key
             ]
-        case .likePost(postID: let postID):
+        case .likePost(postID: let postID, _):
             return [
                 Header.authorization.rawValue: UserDefaultsManeger.shared.token,
-                        Header.contentType.rawValue: Header.json.rawValue,
-                        Header.sesacKey.rawValue : APIKey.key
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue : APIKey.key
             ]
         }
     }

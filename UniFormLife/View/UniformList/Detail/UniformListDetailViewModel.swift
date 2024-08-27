@@ -23,28 +23,28 @@ final class UniformListDetailViewModel: ViewModelType {
    
         let isLiked = BehaviorRelay<Bool>(value: false)
         
+    
         input.likeButtonTapped
-            .asObservable()
             .withLatestFrom(isLiked)
             .map { !$0 }
             .bind(to: isLiked)
             .disposed(by: disposeBag)
         
-       
+  
         input.likeButtonTapped
-            .asObservable()
             .flatMapLatest { _ in
                 NetworkManager.shared.callRequest(router: .likePost(postID: "66c967cf5056517017a46c0e", likeState: false), type: LikePost.self)
             }
             .bind(with: self, onNext: { owner, result in
-                    switch result {
-                    case .success(let likePost):
-                        print("성공적으로 응답 받음:", likePost)
-                    case .failure(let error):
-                        print("서버 에러 발생:", error)
-                    }
-                })
-                .disposed(by: disposeBag)
+                switch result {
+                case .success(let likePost):
+                    print("성공적으로 응답 받음:", likePost)
+                case .failure(let error):
+                    print("네트워크 요청 실패:", error)
+                }
+            })
+            .disposed(by: disposeBag)
+               // isLiked를 Observable로 변환하여 출력
                let isLikedObservable = isLiked.asObservable()
                
                return Output(isLiked: isLikedObservable)

@@ -24,7 +24,7 @@ enum CollectionView {
         let sectionSpacing: CGFloat = 4
         let cellSpacing: CGFloat = 4
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 176, height: 200)
+        layout.itemSize = CGSize(width: 176, height: 280)
         layout.scrollDirection = .vertical // 가로 간격
         layout.minimumLineSpacing = cellSpacing // 세로 간격
         layout.minimumInteritemSpacing = cellSpacing
