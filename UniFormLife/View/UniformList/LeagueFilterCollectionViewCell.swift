@@ -11,7 +11,7 @@ import SnapKit
 final class LeagueFilterCollectionViewCell: BaseCollectionViewCell {
     let leagueImageView = {
         let view = UIImageView()
-        view.backgroundColor = .blue
+//        view.backgroundColor = .blue
         view.contentMode = .scaleToFill
         return view
     }()

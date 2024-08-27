@@ -25,6 +25,7 @@ final class UniformListViewController: BaseViewController {
     let uniformListCollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: CollectionView.uniformLayout())
         view.register(UniformListCollectionViewCell.self, forCellWithReuseIdentifier: UniformListCollectionViewCell.identifier)
+//        view.backgroundColor = .lightGray
         return view
     }()
     let disposeBag = DisposeBag()

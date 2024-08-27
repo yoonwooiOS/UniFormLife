@@ -23,8 +23,8 @@ final class HomeTabBarController: UITabBarController {
         uniformList.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.uniformList, tag: 0)
         
         let feedVC = UniformStyleFeedViewController()
-//        let feed = UINavigationController(rootViewController: feedVC)
-//        feedVC.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.feed, tag: 1)
+        let feed = UINavigationController(rootViewController: feedVC)
+        feedVC.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.feed, tag: 1)
        
         let addPostVC = AddPostViewController()
         let addPost = UINavigationController(rootViewController: addPostVC)
@@ -34,6 +34,6 @@ final class HomeTabBarController: UITabBarController {
         let profile = UINavigationController(rootViewController: profileVC)
         profile.tabBarItem = UITabBarItem(title: "", image: Image.TabBar.profile, tag: 3)
         
-        setViewControllers([uniformList, addPost, profile], animated: true)
+        setViewControllers([uniformList, addPost, feed, profile], animated: true)
     }
 }

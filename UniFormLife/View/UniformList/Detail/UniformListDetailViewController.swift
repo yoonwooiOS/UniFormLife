@@ -37,7 +37,7 @@ final class UniformListDetailViewController: BaseViewController {
     private let userProfileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "son")
-        $0.backgroundColor = .green
+//        $0.backgroundColor = .green
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 30
     }
@@ -66,13 +66,22 @@ final class UniformListDetailViewController: BaseViewController {
         view.backgroundColor = Color.lightGray
         return view
     }()
-    private let mainBaseView = UIView().then {
-        $0.backgroundColor = .green
+    private let mainBaseView = UIView().then { _ in
+//        $0.backgroundColor = .green
     }
     private lazy var postTitle = UILabel().then {
         $0.font = Font.bold18
+        $0.numberOfLines = 0
     }
+    private lazy var content = UILabel().then {
+        $0.font = Font.regular14
+        $0.numberOfLines = 0
+    }
+    private let usedLabel = AddPaddingLabel().then { _ in }
+    private let sizeLabel = AddPaddingLabel().then { _ in }
+    private let yearLabel = AddPaddingLabel().then { _ in }
     private let disposeBag = DisposeBag()
+    
     private let viewModel = UniformListDetailViewModel()
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
@@ -85,8 +94,11 @@ final class UniformListDetailViewController: BaseViewController {
         setUpImageBinding()
         guard let postData else { return }
         postTitle.text = postData.title
-        
-        
+        content.text = postData.content
+        usedLabel.text = postData.content1
+        sizeLabel.text = postData.content2
+        yearLabel.text = postData.content3
+        print(postData.post_id)
     }
     
     override func bind() {
@@ -118,13 +130,13 @@ final class UniformListDetailViewController: BaseViewController {
         [userProfileImageView, userNicknameLabel, likeButton, followersLabel, postCount].forEach {
             userProfileBaseView.addSubview($0)
         }
-        [postTitle].forEach {
+        [postTitle,content, usedLabel, sizeLabel, yearLabel].forEach {
             mainBaseView.addSubview($0)
         }
     }
     
     override func setUpLayout() {
-        let leadingOffset = 8
+        let baseOffset = 8
         baseScrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -142,12 +154,12 @@ final class UniformListDetailViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         userProfileBaseView.snp.makeConstraints { make in
-            make.top.equalTo(pageControl.snp.bottom).offset(leadingOffset)
+            make.top.equalTo(pageControl.snp.bottom).offset(baseOffset)
             make.horizontalEdges.equalToSuperview().inset(4)
             make.height.equalTo(68)
         }
         userProfileImageView.snp.makeConstraints { make in
-            make.leading.equalTo(userProfileBaseView).offset(leadingOffset)
+            make.leading.equalTo(userProfileBaseView).offset(baseOffset)
             make.centerY.equalTo(userProfileBaseView)
             make.size.equalTo(60)
         }
@@ -156,21 +168,21 @@ final class UniformListDetailViewController: BaseViewController {
             make.top.equalTo(userProfileImageView.snp.top)
         }
         likeButton.snp.makeConstraints { make in
-            make.trailing.equalTo(userProfileBaseView).inset(leadingOffset)
+            make.trailing.equalTo(userProfileBaseView).inset(baseOffset)
             make.centerY.equalTo(userProfileImageView)
-            make.size.equalTo(60)
+            make.size.equalTo(56)
         }
         followersLabel.snp.makeConstraints { make in
             make.top.equalTo(userNicknameLabel.snp.bottom).offset(2)
-            make.leading.equalTo(userProfileImageView.snp.trailing).offset(leadingOffset)
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(baseOffset)
         }
         postCount.snp.makeConstraints { make in
             make.top.equalTo(followersLabel.snp.bottom).offset(2)
-            make.leading.equalTo(userProfileImageView.snp.trailing).offset(leadingOffset)
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(baseOffset)
         }
         seperator.snp.makeConstraints { make in
-            make.top.equalTo(userProfileBaseView.snp.bottom).offset(16)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(leadingOffset)
+            make.top.equalTo(userProfileBaseView.snp.bottom).offset(8)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(baseOffset)
             make.height.equalTo(1)
         }
         mainBaseView.snp.makeConstraints { make in
@@ -178,12 +190,29 @@ final class UniformListDetailViewController: BaseViewController {
             make.horizontalEdges.bottom.equalToSuperview()
         }
         postTitle.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview().offset(leadingOffset)
+            make.top.horizontalEdges.equalToSuperview().offset(baseOffset)
             
+        }
+        usedLabel.snp.makeConstraints { make in
+            make.top.equalTo(postTitle.snp.bottom).offset(baseOffset)
+            make.leading.equalToSuperview().offset(baseOffset)
+        }
+        sizeLabel.snp.makeConstraints { make in
+            make.top.equalTo(postTitle.snp.bottom).offset(baseOffset)
+            make.leading.equalTo(usedLabel.snp.trailing).offset(4)
+        }
+        yearLabel.snp.makeConstraints { make in
+            make.top.equalTo(postTitle.snp.bottom).offset(baseOffset)
+            make.leading.equalTo(sizeLabel.snp.trailing).offset(4)
+        }
+        content.snp.makeConstraints { make in
+            make.top.equalTo(yearLabel.snp.bottom).offset(baseOffset)
+            make.horizontalEdges.equalToSuperview().offset(baseOffset)
         }
         contentView.snp.makeConstraints { make in
             make.bottom.equalTo(userProfileBaseView.snp.bottom).offset(500)
         }
+        
     }
     
     private func setUpImages() {

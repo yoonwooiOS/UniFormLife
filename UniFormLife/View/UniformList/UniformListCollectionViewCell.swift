@@ -54,7 +54,7 @@ final class UniformListCollectionViewCell: BaseCollectionViewCell {
     override func setUpLayout() {
         uniformImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(120)
+            make.height.equalTo(200)
         }
         baseView.snp.makeConstraints { make in
             make.top.equalTo(uniformImageView.snp.bottom)
