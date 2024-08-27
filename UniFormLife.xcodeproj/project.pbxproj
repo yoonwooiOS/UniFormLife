@@ -56,6 +56,8 @@
 		99008D762C71AE9700DC836C /* ValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D752C71AE9700DC836C /* ValidEmail.swift */; };
 		99008D782C71BEFD00DC836C /* LeagueFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */; };
 		99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */; };
+		99227B362C7DF816000DCA5D /* AddPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99227B352C7DF816000DCA5D /* AddPostViewModel.swift */; };
+		99227B382C7DFBC9000DCA5D /* RoundRectTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99227B372C7DFBC9000DCA5D /* RoundRectTextField.swift */; };
 		992F6BA62C76280900C59543 /* UniformListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BA52C76280900C59543 /* UniformListViewModel.swift */; };
 		992F6BB52C77552000C59543 /* EditPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB42C77552000C59543 /* EditPostQuery.swift */; };
 		992F6BB72C79663D00C59543 /* AddPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */; };
@@ -64,6 +66,8 @@
 		992F6BBF2C79ABC200C59543 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 992F6BBE2C79ABC200C59543 /* Then */; };
 		992F6BC82C7C98A600C59543 /* UniformListDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */; };
 		992F6BCA2C7CABCA00C59543 /* LikePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BC92C7CABCA00C59543 /* LikePost.swift */; };
+		99537D5E2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99537D5D2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift */; };
+		99537D602C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99537D5F2C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift */; };
 		9959C7162C74462D006208CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9959C7152C74462D006208CA /* GoogleService-Info.plist */; };
 		9959C7192C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		9959C71B2C744661006208CA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9959C71A2C744661006208CA /* FirebaseCrashlytics */; };
@@ -116,6 +120,8 @@
 		99008D752C71AE9700DC836C /* ValidEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidEmail.swift; sourceTree = "<group>"; };
 		99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListCollectionViewCell.swift; sourceTree = "<group>"; };
+		99227B352C7DF816000DCA5D /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
+		99227B372C7DFBC9000DCA5D /* RoundRectTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRectTextField.swift; sourceTree = "<group>"; };
 		992F6BA52C76280900C59543 /* UniformListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListViewModel.swift; sourceTree = "<group>"; };
 		992F6BB42C77552000C59543 /* EditPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostQuery.swift; sourceTree = "<group>"; };
 		992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaddingLabel.swift; sourceTree = "<group>"; };
@@ -123,6 +129,8 @@
 		992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListDetailViewController.swift; sourceTree = "<group>"; };
 		992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListDetailViewModel.swift; sourceTree = "<group>"; };
 		992F6BC92C7CABCA00C59543 /* LikePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikePost.swift; sourceTree = "<group>"; };
+		99537D5D2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		99537D5F2C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9959C7152C74462D006208CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +238,7 @@
 				99008D232C6D965600DC836C /* SignTextField.swift */,
 				99008D252C6D9A8600DC836C /* BaseButton.swift */,
 				992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */,
+				99227B372C7DFBC9000DCA5D /* RoundRectTextField.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -356,6 +365,9 @@
 			isa = PBXGroup;
 			children = (
 				99008D612C6F431600DC836C /* AddPostViewController.swift */,
+				99227B352C7DF816000DCA5D /* AddPostViewModel.swift */,
+				99537D5D2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift */,
+				99537D5F2C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift */,
 			);
 			path = AddPost;
 			sourceTree = "<group>";
@@ -528,6 +540,7 @@
 				99008D482C6DFA1F00DC836C /* Login.swift in Sources */,
 				992F6BCA2C7CABCA00C59543 /* LikePost.swift in Sources */,
 				99008D052C6C9E5900DC836C /* ReuseIdentifier.swift in Sources */,
+				99227B382C7DFBC9000DCA5D /* RoundRectTextField.swift in Sources */,
 				992F6BBC2C79A9F000C59543 /* UniformListDetailViewController.swift in Sources */,
 				99008CDD2C6C985300DC836C /* AppDelegate.swift in Sources */,
 				99008D532C6E0C9800DC836C /* SignInViewModel.swift in Sources */,
@@ -540,16 +553,19 @@
 				99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */,
 				99008CFC2C6C9B3100DC836C /* ViewModelType.swift in Sources */,
 				99008D602C6F430100DC836C /* UniformStyleFeedViewController.swift in Sources */,
+				99227B362C7DF816000DCA5D /* AddPostViewModel.swift in Sources */,
 				99008D0C2C6CC31500DC836C /* Font.swift in Sources */,
 				99008D562C6F37B700DC836C /* HomeTabBarController.swift in Sources */,
 				99008D512C6DFA8D00DC836C /* LoginQuery.swift in Sources */,
 				99008D112C6D958B00DC836C /* SignInViewController.swift in Sources */,
 				99008D342C6DD89800DC836C /* BirthDayViewController.swift in Sources */,
 				992F6BB92C7968A800C59543 /* CollectionView.swift in Sources */,
+				99537D602C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift in Sources */,
 				99008CF72C6C9A8900DC836C /* BaseTableViewCell.swift in Sources */,
 				99008CDF2C6C985300DC836C /* SceneDelegate.swift in Sources */,
 				99008D4E2C6DFA5100DC836C /* FileModel.swift in Sources */,
 				99008D0A2C6CC2CA00DC836C /* Color.swift in Sources */,
+				99537D5E2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift in Sources */,
 				992F6BB52C77552000C59543 /* EditPostQuery.swift in Sources */,
 				99008D032C6C9DD600DC836C /* APIKey.swift in Sources */,
 				99008CF92C6C9AB300DC836C /* BaseCollectionViewCell.swift in Sources */,

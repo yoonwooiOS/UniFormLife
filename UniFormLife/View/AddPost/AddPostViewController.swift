@@ -32,15 +32,7 @@ class AddPostViewController: BaseViewController  {
         $0.showsVerticalScrollIndicator = false
     }
     private let contentView = UIView()
-    private let titleTextField = UITextField().then {
-        $0.placeholder = "제목"
-        $0.borderStyle = .roundedRect
-        $0.textColor = .black
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.borderWidth = 1.0
-        $0.layer.cornerRadius = 5.0
-    }
-    
+    private let titleTextField = RoundRectTextField("제목",inputView: nil)
     private let contentTextView = UITextView().then {
         $0.font = Font.regular16
         $0.textColor = .black
@@ -54,54 +46,13 @@ class AddPostViewController: BaseViewController  {
         $0.text = "내용을 입력하세요"
         $0.textColor = UIColor.lightGray
     }
-    private let priceTextField = UITextField().then {
-        $0.placeholder = "가격"
-        $0.borderStyle = .roundedRect
-        $0.textColor = .black
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.borderWidth = 1.0
-        $0.layer.cornerRadius = 5.0
+    private let priceTextField = RoundRectTextField("가격",inputView: nil).then {
         $0.keyboardType = .numberPad
     }
-    
-    private lazy var sizeTextField = UITextField().then {
-        $0.placeholder = "사이즈"
-        $0.borderStyle = .roundedRect
-        $0.textColor = .black
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.borderWidth = 1.0
-        $0.layer.cornerRadius = 5.0
-        $0.inputView = sizePickerView
-    }
-    
-    private lazy var conditionTextField = UITextField().then {
-        $0.placeholder = "상품 중고 여부"
-        $0.borderStyle = .roundedRect
-        $0.textColor = .black
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.borderWidth = 1.0
-        $0.layer.cornerRadius = 5.0
-        $0.inputView = conditionPickerView
-    }
-    
-    private lazy var seasonTextField = UITextField().then {
-        $0.placeholder = "시즌"
-        $0.borderStyle = .roundedRect
-        $0.textColor = .black
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.borderWidth = 1.0
-        $0.layer.cornerRadius = 5.0
-        $0.inputView = seasonsPickerView
-    }
-    private lazy var leagueTextField = UITextField().then {
-        $0.placeholder = "리그"
-        $0.borderStyle = .roundedRect
-        $0.textColor = .black
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.borderWidth = 1.0
-        $0.layer.cornerRadius = 5.0
-        $0.inputView = leaguePickerview
-    }
+    private lazy var sizeTextField = RoundRectTextField("사이즈", inputView: sizePickerView)
+    private lazy var conditionTextField = RoundRectTextField("상품 상태", inputView: conditionPickerView)
+    private lazy var seasonTextField = RoundRectTextField("시즌", inputView: seasonsPickerView)
+    private lazy var leagueTextField = RoundRectTextField("리그", inputView: leaguePickerview)
     private let uploadButton = UIBarButtonItem(title: "등록", style: .plain, target: nil, action: nil).then {
         $0.tintColor = Color.black
     }
@@ -111,11 +62,13 @@ class AddPostViewController: BaseViewController  {
         $0.backgroundColor = UIColor.systemBlue
         $0.layer.cornerRadius = 5.0
     }
-    
     private var images = BehaviorSubject<[UIImage]>(value: [UIImage(named: "addImages")!])
     private let disposeBag = DisposeBag()
+    private let viewModel = AddPostViewModel()
     
     override func bind() {
+        let input = AddPostViewModel.Input()
+        let output = viewModel.transfrom(input: input)
         images.bind(to: collectionView.rx.items) { collectionView, index, image in
                 let indexPath = IndexPath(item: index, section: 0)
                 if index != 0 {
@@ -124,7 +77,6 @@ class AddPostViewController: BaseViewController  {
                     return cell
                 } else {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as! AddPhotoCollectionViewCell
-                    
                     return cell
                 }
             }
