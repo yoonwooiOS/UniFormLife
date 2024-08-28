@@ -45,7 +45,7 @@ final class UniformListViewController: BaseViewController {
             .map{ $0.row }
         let uniformPostTapped = uniformListCollectionView.rx.modelSelected(PostData.self)
         let input = UniformListViewModel.Input(viewdidLoadTrigger: Observable.just(()), leagueCellTrigger: leagueCellTrigger, uniformPostTapped: uniformPostTapped.asObservable())
-        let output = viewModel.transfrom(input: input)
+        let output = viewModel.transform(input: input)
         output.continentalLeague
             .bind(to: leagueCollectionView.rx.items(cellIdentifier: LeagueFilterCollectionViewCell.identifier, cellType: LeagueFilterCollectionViewCell.self)) { (row, element, cell) in
                 cell.leagueImageView.image = UIImage(named: element)

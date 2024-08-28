@@ -22,7 +22,7 @@ class EmailValidViewModel: ViewModelType {
         let validText: Observable<Bool>
         let eamilValid: PublishRelay<Bool>
     }
-    func transfrom(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         let validText = input.emailText
             .map { $0.count > 7 && $0.contains("@")}
         let emailValid = PublishRelay<Bool>()

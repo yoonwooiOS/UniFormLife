@@ -103,7 +103,7 @@ final class UniformListDetailViewController: BaseViewController {
     
     override func bind() {
         let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap)
-        let output = viewModel.transfrom(input: input)
+        let output = viewModel.transform(input: input)
         output.isLiked
             .bind(with: self, onNext: { owner, isLiked in
 //                print(isLiked)

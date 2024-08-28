@@ -34,7 +34,7 @@ final class EmailValidViewController: BaseViewController {
     let viewModel = EmailValidViewModel()
     override func bind() {
         let input = EmailValidViewModel.Input(emailText: emailTextField.rx.text.orEmpty, validButtonTap: validationButton.rx.tap , nextButtonTap: nextButton.rx.tap)
-        let output = viewModel.transfrom(input: input)
+        let output = viewModel.transform(input: input)
         
         output.validText
             .bind(with: self) { owner, value in

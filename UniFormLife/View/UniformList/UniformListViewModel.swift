@@ -24,7 +24,7 @@ final class UniformListViewModel: ViewModelType {
         let continentalLeague: Observable<[String]>
         let uniformPostTapped: PublishRelay<PostData>
     }
-    func transfrom(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         let uniformListData = PublishRelay<[PostData]>()
         let selectedPost = PublishRelay<PostData>()
         Observable.combineLatest(input.viewdidLoadTrigger, productID)

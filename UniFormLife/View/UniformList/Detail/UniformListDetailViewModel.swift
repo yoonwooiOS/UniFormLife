@@ -19,7 +19,7 @@ final class UniformListDetailViewModel: ViewModelType {
         let isLiked: Observable<Bool>
     }
     
-    func transfrom(input: Input) -> Output {
+    func transform(input: Input) -> Output {
    
         let isLiked = BehaviorRelay<Bool>(value: false)
         

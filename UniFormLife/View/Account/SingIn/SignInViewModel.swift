@@ -23,7 +23,7 @@ class SignInViewModel: ViewModelType {
         let signUpButtonTap: ControlEvent<Void>
     }
     
-    func transfrom(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         let eamilText = BehaviorRelay<String>(value: "")
         let passwordText = BehaviorRelay<String>(value: "")
         let createLoginValid = PublishSubject<Result<Login, Error>>()
