@@ -42,7 +42,7 @@ final class SignInViewController: BaseViewController {
             
         let input = SignInViewModel.Input(signInButtonTap: signInButton.rx.tap, signUpButtonTap: signUpButton.rx.tap, eamilText: emailTextField.rx.text.orEmpty, passwordText: passwordTextField.rx.text.orEmpty)
         
-        let output = signInViewModel.transfrom(input: input)
+        let output = signInViewModel.transform(input: input)
    
         output.createLoginValid
             .bind(with: self, onNext: { owner, result in

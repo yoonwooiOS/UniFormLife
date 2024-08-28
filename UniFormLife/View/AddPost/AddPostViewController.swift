@@ -12,19 +12,18 @@ import RxSwift
 import RxCocoa
 
 class AddPostViewController: BaseViewController  {
-    private let sizes = Observable.just(["XS(85)","S(90)", "M(95)", "L(100)", "XL(105)", "XXL(110)"])
-    private let conditions = Observable.just(["새 상품","거의 새것","중고 상품"])
-    private let seasons = Observable.just(["01-02", "02-03", "03-04", "04-05", "05-06", "06-07", "07-08", "08-09", "09-10",
-                                         "10-11", "11-12", "12-13", "13-14", "14-15", "15-16", "16-17", "17-18", "18-19",
-                                         "19-20", "20-21", "21-22", "22-23", "23-24", "24-25"
-])
-    private let league = Observable.just(["프리미어리그", "라리가", "세리에A", "리그 1", "K 리그", "국가대표", "기타"])
+   
+    private let images = BehaviorSubject<[UIImage?]>(value: [nil])
+    private let selectedImagesSubject = PublishSubject<[UIImage?]>()
+    private let imageView1 = UIImageView()
+    private let imageView2 = UIImageView()
+    private let imageView3 = UIImageView()
     
     private let sizePickerView = UIPickerView()
     private let conditionPickerView = UIPickerView()
     private let seasonsPickerView = UIPickerView()
     private let leaguePickerview = UIPickerView()
-    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionView.leagueCollectionViewlayout()).then {
+    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionView.addPhotoLayout()).then {
         $0.register(SelectPostImageCollectionViewCell.self, forCellWithReuseIdentifier: SelectPostImageCollectionViewCell.identifier)
         $0.register(AddPhotoCollectionViewCell.self, forCellWithReuseIdentifier: AddPhotoCollectionViewCell.identifier)
     }
@@ -62,85 +61,107 @@ class AddPostViewController: BaseViewController  {
         $0.backgroundColor = UIColor.systemBlue
         $0.layer.cornerRadius = 5.0
     }
-    private var images = BehaviorSubject<[UIImage]>(value: [UIImage(named: "addImages")!])
+    
     private let disposeBag = DisposeBag()
     private let viewModel = AddPostViewModel()
     
     override func bind() {
-        let input = AddPostViewModel.Input()
-        let output = viewModel.transfrom(input: input)
-        images.bind(to: collectionView.rx.items) { collectionView, index, image in
+        let addPhotoTapped = collectionView.rx.itemSelected
+            .filter { $0.row == 0 }
+            .map { _ in }
+        let sizeSelected = sizePickerView.rx.modelSelected(String.self)
+               .map { $0.first ?? "" }
+              
+           let conditionSelected = conditionPickerView.rx.modelSelected(String.self)
+               .map { $0.first ?? "" }
+              
+           let seasonSelected = seasonsPickerView.rx.modelSelected(String.self)
+               .map { $0.first ?? "" }
+              
+           let leagueSelected = leaguePickerview.rx.modelSelected(String.self)
+               .map { $0.first ?? "" }
+              
+        let input = AddPostViewModel.Input(
+            addPhotoTapped: addPhotoTapped,
+            selectedImages: selectedImagesSubject,
+            title: titleTextField.rx.text.orEmpty,
+            content: contentTextView.rx.text.orEmpty,
+            price: priceTextField.rx.text.orEmpty,
+            sizeSelected: sizeSelected,
+            conditionSelected: conditionSelected,
+            seasonSelected: seasonSelected,
+            leagueSelected: leagueSelected,
+            completeButtonTapped: completeButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.images
+            .bind(to: collectionView.rx.items) { collectionView, index, image in
                 let indexPath = IndexPath(item: index, section: 0)
-                if index != 0 {
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPostImageCollectionViewCell.identifier, for: indexPath) as! SelectPostImageCollectionViewCell
-                    cell.imageView.image = image
+                if index == 0 {
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as! AddPhotoCollectionViewCell
                     return cell
                 } else {
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as! AddPhotoCollectionViewCell
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPostImageCollectionViewCell.identifier, for: indexPath) as! SelectPostImageCollectionViewCell
+                    guard let image else { return cell }
+                    cell.setupCell(image: image, index: index)
                     return cell
                 }
             }
+            .disposed(by: disposeBag)
+        input.addPhotoTapped
+            .subscribe(onNext: { [weak self] in
+                self?.openGallery()
+            })
             .disposed(by: disposeBag)
         contentTextView.rx.text
             .orEmpty
             .map { !$0.isEmpty }
             .bind(to: placeholderLabel.rx.isHidden)
             .disposed(by: disposeBag)
-        
-        sizes
-            .bind(to: sizePickerView.rx.itemTitles) { _, item in
-               return item
-                
-            }
-            .disposed(by: disposeBag)
-        
-        sizePickerView.rx.modelSelected(String.self)
-            .map { $0.first }
-            .debug()
-            .bind(to: sizeTextField.rx.text)
-            .disposed(by: disposeBag)
-    
-        conditions
-            .bind(to: conditionPickerView.rx.itemTitles) { _, item in
-                return item
-            }
-            .disposed(by: disposeBag)
-        
-        conditionPickerView.rx.modelSelected(String.self)
-            .map { $0.first }
-            .debug()
-            .bind(to: conditionTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        seasons
-            .bind(to: seasonsPickerView.rx.itemTitles) { _, item in
-                return item
-            }
-            .disposed(by: disposeBag)
-        
-        seasonsPickerView.rx.modelSelected(String.self)
-            .map { $0.first }
-            .debug()
-            .bind(to: seasonTextField.rx.text)
-            .disposed(by: disposeBag)
-        league
-            .bind(to: leaguePickerview.rx.itemTitles) { _, item in
-                return item
-            }
-            .disposed(by: disposeBag)
-        leaguePickerview.rx.modelSelected(String.self)
-            .map { $0.first }
-            .debug()
-            .bind(to: leagueTextField.rx.text)
-            .disposed(by: disposeBag)
+        output.sizePickerData
+               .bind(to: sizePickerView.rx.itemTitles) { _, item in item }
+               .disposed(by: disposeBag)
+
+           output.conditionPickerData
+               .bind(to: conditionPickerView.rx.itemTitles) { _, item in item }
+               .disposed(by: disposeBag)
+
+           output.seasonPickerData
+               .bind(to: seasonsPickerView.rx.itemTitles) { _, item in item }
+               .disposed(by: disposeBag)
+
+           output.leaguePickerData
+               .bind(to: leaguePickerview.rx.itemTitles) { _, item in item }
+               .disposed(by: disposeBag)
+           sizeSelected
+               .bind(to: sizeTextField.rx.text)
+               .disposed(by: disposeBag)
+           conditionSelected
+               .bind(to: conditionTextField.rx.text)
+               .disposed(by: disposeBag)
+           seasonSelected
+               .bind(to: seasonTextField.rx.text)
+               .disposed(by: disposeBag)
+           
+           leagueSelected
+               .bind(to: leagueTextField.rx.text)
+               .disposed(by: disposeBag)
+           output.isPlaceholderHidden
+               .bind(to: placeholderLabel.rx.isHidden)
+               .disposed(by: disposeBag)
+           completeButton.rx.tap
+               .subscribe(onNext: {
+                   print("버튼탭")
+               })
+               .disposed(by: disposeBag)
     }
     
     override func setUpHierarchy() {
         view.addSubview(scrollView)
-//        view.addSubview(completeButton)
         contentTextView.addSubview(placeholderLabel)
         scrollView.addSubview(contentView)
-        [collectionView, contentTextView, titleTextField, priceTextField, sizeTextField, conditionTextField, seasonTextField, leagueTextField].forEach {
+        [collectionView, contentTextView, titleTextField, priceTextField, sizeTextField, conditionTextField, seasonTextField, leagueTextField,completeButton].forEach {
             contentView.addSubview($0)
         }
     }
@@ -201,19 +222,47 @@ class AddPostViewController: BaseViewController  {
             make.top.equalTo(seasonTextField.snp.bottom).offset(16)
             make.leading.trailing.equalTo(contentView).inset(16)
             make.height.equalTo(44)
+        }
+        completeButton.snp.makeConstraints { make in
+            make.top.equalTo(leagueTextField.snp.bottom).offset(16)
+            make.leading.trailing.equalTo(contentView).inset(16)
+            make.height.equalTo(44)
             make.bottom.equalTo(contentView).offset(-24)
         }
-//        completeButton.snp.makeConstraints { make in
-//            make.horizontalEdges.equalTo(view).inset(16)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
-//            make.height.equalTo(50)
-//        }
     }
+    
     override func setUpNavigationTitle() {
         self.navigationItem.title = "유니폼 등록"
     }
-    override func setUpNavigationItems() {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.rightBarButtonItem = uploadButton
+}
+
+extension AddPostViewController: PHPickerViewControllerDelegate {
+    @objc private func openGallery() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 5
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        handlePickedResults(results)
+    }
+    
+    private func handlePickedResults(_ results: [PHPickerResult]) {
+        var selectedImages = [UIImage]()
+        
+        for result in results {
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
+                guard let self = self else { return }
+                if let image = object as? UIImage {
+                    selectedImages.append(image)
+                    self.selectedImagesSubject.onNext(selectedImages)
+                }
+            }
+        }
     }
 }
