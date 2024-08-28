@@ -17,7 +17,7 @@ enum Router: TargetType {
     case validateEmail(email: String)
     case withdrawAccount
     case uploadPostImage
-    case uploadPost
+    case uploadPost(postData: PostRequestModel)
     case fetchPost(productID: String)
     case fetchspecificPost
     case editPost(data: EditPostQuery)

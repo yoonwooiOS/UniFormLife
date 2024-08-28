@@ -12,52 +12,6 @@ import RxSwift
 final class NetworkManager {
     static let shared = NetworkManager()
     private init () { }
-//    func callRequest<T: Decodable>(router: Router, type: T.Type) -> Single<Result<T, Error>> {
-//        return Single.create { observer -> Disposable in
-//            do {
-//                let request = try router.asURLRequest()
-//                AF.request(request).responseJSON { response in
-//                    // 상태 코드 확인
-//                    if let statusCode = response.response?.statusCode {
-//                        print("HTTP Status Code: \(statusCode)")
-//                    }
-//                    
-//                    switch response.result {
-//                    case .success(let value):
-//                        // 상태 코드에 따른 분기 처리
-//                        if let statusCode = response.response?.statusCode {
-//                            switch statusCode {
-//                            case 200:
-//                                // 정상적인 응답 처리
-//                                do {
-//                                    let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-//                                    let decodedData = try JSONDecoder().decode(T.self, from: jsonData)
-//                                    observer(.success(.success(decodedData)))
-//                                } catch {
-//                                    observer(.success(.failure(error)))
-//                                }
-//                            default:
-//                                // 오류 메시지 처리
-//                                if let json = value as? [String: Any], let message = json["message"] as? String {
-//                                    print("서버에서 오류 메시지 반환: \(message)")
-//                                    let error = NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: message])
-//                                    observer(.success(.failure(error)))
-//                                } else {
-//                                    let error = NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
-//                                    observer(.success(.failure(error)))
-//                                }
-//                            }
-//                        }
-//                    case .failure(let error):
-//                        observer(.success(.failure(error)))
-//                    }
-//                }
-//            } catch {
-//                observer(.success(.failure(error)))
-//            }
-//            return Disposables.create()
-//        }
-//    }
         func callRequest<T: Decodable>(router: Router, type: T.Type) -> Single<Result<T, Error>> {
             return Single.create { observer -> Disposable in
                 do {
@@ -81,6 +35,38 @@ final class NetworkManager {
                 return Disposables.create()
             }
         }
+    func uploadImagefiles(images: [UIImage]) -> Single<Result<Files, Error>> {
+        return Single.create { single -> Disposable in
+            do {
+                let router = Router.uploadPostImage
+                let request = try router.asURLRequest()
+                
+                AF.upload(multipartFormData: { multipartFormData in
+                    for (index, image) in images.enumerated() {
+                        if let imageData = image.pngData() {
+                            multipartFormData.append(imageData, withName: "files", fileName: "image\(index).png", mimeType: "image/png")
+                            print("이미지 \(index) 추가됨")
+                        }
+                    }
+                }, with: request)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: Files.self) { response in
+                    switch response.result {
+                    case .success(let value):
+                        print("서버 응답 성공: \(value)")
+                        single(.success(.success(value)))
+                    case .failure(let error):
+                        print("서버 응답 실패: \(error)")
+                        single(.success(.failure(error)))
+                    }
+                }
+            } catch {
+                print("업로드 요청 실패: \(error)")
+                single(.success(.failure(error)))
+            }
+            return Disposables.create()
+        }
+    }
     func fetchPost(productID: String) -> Single<Result<FetchPost, Error>> {
         return Single.create { observer -> Disposable in
             do {
@@ -154,26 +140,6 @@ final class NetworkManager {
             }
         } catch {
             print(error, "fetchProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
-        }
-    }
-    func editProfile(api: Router) {
-        do {
-            let request = try Router.editProfile.asURLRequest()
-            AF.request(request).responseDecodable(of: Profile.self) { response in
-                if response.response?.statusCode == 419 {
-                    self.refreshToken()
-                } else {
-                    switch response.result {
-                    case .success(let success):
-                        print(success)
-                        self.fetchProfile()
-                    case .failure(let failure):
-                        print(failure)
-                    }
-                }
-            }
-        } catch {
-            print(error, "EditProfile, URLRequestConvertible 에서 asURLRequest로 요청 만드는 것 실패!")
         }
     }
     func refreshToken() {
