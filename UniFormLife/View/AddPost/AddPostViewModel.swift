@@ -17,7 +17,7 @@ final class AddPostViewModel: ViewModelType {
     let leaguePickerData = Observable.just(["프리미어리그", "라리가", "세리에A", "리그 1", "K 리그", "국가대표", "기타"])
     
     let disposeBag = DisposeBag()
-    private let imageArray = BehaviorSubject<[UIImage?]>(value: [nil])
+    let imageArray = BehaviorSubject<[UIImage?]>(value: [nil])
     struct Input {
             let addPhotoTapped: Observable<Void>
             let selectedImages: Observable<[UIImage?]>
@@ -38,7 +38,7 @@ final class AddPostViewModel: ViewModelType {
             let conditionPickerData: Observable<[String]>
             let seasonPickerData: Observable<[String]>
             let leaguePickerData: Observable<[String]>
-           
+            let selectedImagesCount: Observable<Int>
         }
         
         func transform(input: Input) -> Output {
@@ -51,7 +51,10 @@ final class AddPostViewModel: ViewModelType {
                 }
                 .bind(to: imageArray)
                 .disposed(by: disposeBag)
-            
+            let selectedImagesCount = imageArray
+                        .map { images in
+                            images.filter { $0 != nil }.count
+                        }
             let postRequestModel = Observable.combineLatest(
                 input.title.asObservable(),
                 input.content.asObservable(),
@@ -85,7 +88,7 @@ final class AddPostViewModel: ViewModelType {
                 sizePickerData: sizePickerData,
                 conditionPickerData: conditionPickerData,
                 seasonPickerData: seasonPickerData,
-                leaguePickerData: leaguePickerData
+                leaguePickerData: leaguePickerData, selectedImagesCount: selectedImagesCount
             )
         }
     private func uploadImages(images: [UIImage]) {

@@ -44,4 +44,7 @@ import Then
             make.centerX.equalToSuperview()
         }
     }
+     func setUpCell(_ imageCount: Int) {
+         imageCountLabel.text = "\(imageCount)/5"
+     }
 }

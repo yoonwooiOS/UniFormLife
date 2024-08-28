@@ -14,7 +14,7 @@ import RxCocoa
 class AddPostViewController: BaseViewController  {
    
     private let images = BehaviorSubject<[UIImage?]>(value: [nil])
-    private let selectedImagesSubject = PublishSubject<[UIImage?]>()
+    private let selectedImages = PublishSubject<[UIImage?]>()
     private let imageView1 = UIImageView()
     private let imageView2 = UIImageView()
     private let imageView3 = UIImageView()
@@ -83,7 +83,7 @@ class AddPostViewController: BaseViewController  {
               
         let input = AddPostViewModel.Input(
             addPhotoTapped: addPhotoTapped,
-            selectedImages: selectedImagesSubject,
+            selectedImages: selectedImages,
             title: titleTextField.rx.text.orEmpty,
             content: contentTextView.rx.text.orEmpty,
             price: priceTextField.rx.text.orEmpty,
@@ -100,6 +100,11 @@ class AddPostViewController: BaseViewController  {
                 let indexPath = IndexPath(item: index, section: 0)
                 if index == 0 {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCollectionViewCell.identifier, for: indexPath) as! AddPhotoCollectionViewCell
+                    output.selectedImagesCount
+                        .bind { count in
+                            cell.setUpCell(count)
+                        }
+                        .disposed(by: self.disposeBag)
                     return cell
                 } else {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPostImageCollectionViewCell.identifier, for: indexPath) as! SelectPostImageCollectionViewCell
@@ -108,12 +113,29 @@ class AddPostViewController: BaseViewController  {
                     return cell
                 }
             }
+            .disposed(by: disposeBag) 
+        collectionView.rx.itemSelected
+            .filter { $0.row != 0 }
+            .withLatestFrom(output.images) { indexPath, images in
+                (indexPath.row - 1, images.filter { $0 != nil })
+            }
+            .map { index, images -> [UIImage?] in
+                var updatedImages = images
+                updatedImages.remove(at: index)
+                return [nil] + updatedImages
+            }
+            .do(onNext: { updatedImages in
+                print("Updated images after removal: \(updatedImages)")
+            })
+            .bind(to: viewModel.imageArray)
             .disposed(by: disposeBag)
+        
         input.addPhotoTapped
             .subscribe(onNext: { [weak self] in
                 self?.openGallery()
             })
             .disposed(by: disposeBag)
+       
         contentTextView.rx.text
             .orEmpty
             .map { !$0.isEmpty }
@@ -254,15 +276,21 @@ extension AddPostViewController: PHPickerViewControllerDelegate {
     
     private func handlePickedResults(_ results: [PHPickerResult]) {
         var selectedImages = [UIImage]()
+        let dispatchGroup = DispatchGroup()
         
         for result in results {
+            dispatchGroup.enter()
             result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
+                defer { dispatchGroup.leave() }
                 guard let self = self else { return }
                 if let image = object as? UIImage {
                     selectedImages.append(image)
-                    self.selectedImagesSubject.onNext(selectedImages)
                 }
             }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.selectedImages.onNext(selectedImages)
         }
     }
 }

@@ -55,8 +55,10 @@ class SelectPostImageCollectionViewCell: BaseCollectionViewCell {
     }
     func setupCell(image: UIImage, index: Int) {
         imageView.image = image
-//        if index == 1 {
-//            representativeLabel.isHidden = false
-//        }
+        if index == 1 {
+            representativeLabel.isHidden = false
+        } else {
+            representativeLabel.isHidden = true
+        }
     }
 }
