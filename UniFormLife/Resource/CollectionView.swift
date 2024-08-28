@@ -31,4 +31,18 @@ enum CollectionView {
         layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
         return layout
     }
+    static func addPhotoLayout() -> UICollectionViewLayout {
+        let sectionSpacing: CGFloat = 16
+           let cellSpacing: CGFloat = 8
+           let itemWidth: CGFloat = 60
+           let itemHeight: CGFloat = 60
+           
+           let layout = UICollectionViewFlowLayout()
+           layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+           layout.scrollDirection = .horizontal
+           layout.minimumLineSpacing = cellSpacing
+           layout.minimumInteritemSpacing = cellSpacing
+           layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
+           return layout
+    }
 }

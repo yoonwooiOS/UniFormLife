@@ -33,7 +33,7 @@ import Then
     }
     override func setUpLayout() {
         baseView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(contentView.safeAreaLayoutGuide )
         }
         camerImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
