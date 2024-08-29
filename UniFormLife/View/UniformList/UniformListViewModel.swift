@@ -11,13 +11,13 @@ import RxCocoa
 
 final class UniformListViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
-    private let continentalLeague = Observable.just(["PremierLeague","LaLiga","SerieA","League1","KLeague", "Nationalteam"])
+    private let continentalLeague = Observable.just(["PremierLeague","LaLiga","SerieA","Bundesliga", "League1","KLeague", "Nationalteam"])
    
     private let productID = BehaviorRelay<String>(value: "uniformLife_PremierLeague")
     struct Input {
         let viewdidLoadTrigger: Observable<Void>
         let leagueCellTrigger: Observable<Int>
-        let uniformPostTapped: Observable<PostData>
+        let uniformPostTapped:  ControlEvent<PostData>
     }
     struct Output {
         let uniformListData: PublishRelay<[PostData]>
@@ -51,11 +51,13 @@ final class UniformListViewModel: ViewModelType {
                 case 2:
                     return onwer.productID.accept("uniformLife_SerieA")
                 case 3:
-                    return onwer.productID.accept("uniformLife_League1")
+                    return onwer.productID.accept("uniformLife_Bundesliga")
                 case 4:
-                    return onwer.productID.accept("uniformLife_kLeague")
+                    return onwer.productID.accept("uniformLife_League1")
                 case 5:
-                    return onwer.productID.accept("uniformLife_otherUniforms")
+                    return onwer.productID.accept("uniformLife_kLeague")
+                case 6:
+                    return onwer.productID.accept("uniformLife_Nationalteam")
                 default:
                     return onwer.productID.accept("uniformLife_PremierLeague")
                 }

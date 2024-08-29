@@ -12,7 +12,12 @@ final class LeagueFilterCollectionViewCell: BaseCollectionViewCell {
     let leagueImageView = {
         let view = UIImageView()
 //        view.backgroundColor = .blue
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.clipsToBounds = true
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor.systemBlue.cgColor
+        view.layer.cornerRadius = 26
         return view
     }()
     
@@ -21,7 +26,7 @@ final class LeagueFilterCollectionViewCell: BaseCollectionViewCell {
     }
     override func setUpLayout() {
         leagueImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(4)
         }
     }
 }
