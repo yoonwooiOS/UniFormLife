@@ -124,9 +124,6 @@ class AddPostViewController: BaseViewController  {
                 updatedImages.remove(at: index)
                 return [nil] + updatedImages
             }
-            .do(onNext: { updatedImages in
-                print("Updated images after removal: \(updatedImages)")
-            })
             .bind(to: viewModel.imageArray)
             .disposed(by: disposeBag)
         

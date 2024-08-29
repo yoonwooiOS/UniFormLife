@@ -45,4 +45,16 @@ enum CollectionView {
            layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
            return layout
     }
+    static func UniformStyleFeedLayout() -> UICollectionViewLayout {
+        let sectionSpacing: CGFloat = 4
+        let cellSpacing: CGFloat = 4
+        let screenWidth = UIScreen.main.bounds.width - (sectionSpacing * 2)
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: screenWidth, height: screenWidth * 1.3)
+        layout.scrollDirection = .vertical // 가로 간격
+        layout.minimumLineSpacing = cellSpacing // 세로 간격
+        layout.minimumInteritemSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
+        return layout
+    }
 }

@@ -17,7 +17,7 @@ enum Router: TargetType {
     case validateEmail(email: String)
     case withdrawAccount
     case uploadPostImage
-    case uploadPost(postData: PostRequestModel)
+    case uploadPost(postData: UploadPostQuery)
     case fetchPost(productID: String)
     case fetchspecificPost
     case editPost(data: EditPostQuery)
@@ -103,6 +103,9 @@ enum Router: TargetType {
             let params: [String: Bool] = ["like_status": likeState]
             let encoding = JSONEncoder()
             return try? encoding.encode(params)
+        case .uploadPost(let postData):
+                let encoding = JSONEncoder()
+                return try? encoding.encode(postData)
         default:
             return nil
         }

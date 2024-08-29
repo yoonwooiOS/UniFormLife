@@ -15,7 +15,14 @@ final class NetworkManager {
         func callRequest<T: Decodable>(router: Router, type: T.Type) -> Single<Result<T, Error>> {
             return Single.create { observer -> Disposable in
                 do {
+                    
                     let request = try router.asURLRequest()
+                    if let httpBody = request.httpBody {
+                                   let bodyString = String(data: httpBody, encoding: .utf8) ?? "바디 데이터 없음"
+                                   print("Request Body: \(bodyString)")
+                               } else {
+                                   print("Request Body: 바디 데이터 없음")
+                               }
                     AF.request(request).responseDecodable(of: T.self) { response in
                         switch response.result {
                         case .success(let success):
@@ -25,7 +32,7 @@ final class NetworkManager {
                             print("fail", failure)
                             observer(.success(.failure(failure)))
                             if response.response?.statusCode == 419 {
-                                self.fetchProfile()
+                                self.refreshToken()
                             }
                         }
                     }
@@ -35,8 +42,17 @@ final class NetworkManager {
                 return Disposables.create()
             }
         }
-    func uploadImagefiles(images: [UIImage]) -> Single<Result<Files, Error>> {
-        return Single.create { single -> Disposable in
+    func callRequestNoData(router: Router) -> DataRequest {
+           do {
+               let request = try router.asURLRequest()
+               return AF.request(request)
+                   .validate(statusCode: 200..<300)  // 성공 상태 코드 범위 지정
+           } catch {
+               fatalError("Request could not be created: \(error)")
+           }
+       }
+    func uploadImagefiles(images: [UIImage]) -> Single<Result<[String], Error>> {
+        return Single.create { observer -> Disposable in
             do {
                 let router = Router.uploadPostImage
                 let request = try router.asURLRequest()
@@ -54,15 +70,18 @@ final class NetworkManager {
                     switch response.result {
                     case .success(let value):
                         print("서버 응답 성공: \(value)")
-                        single(.success(.success(value)))
+                        observer(.success(.success(value.files)))
                     case .failure(let error):
                         print("서버 응답 실패: \(error)")
-                        single(.success(.failure(error)))
+                        observer(.success(.failure(error)))
+                        if response.response?.statusCode == 419 {
+                            self.refreshToken()
+                        }
                     }
                 }
             } catch {
                 print("업로드 요청 실패: \(error)")
-                single(.success(.failure(error)))
+                observer(.success(.failure(error)))
             }
             return Disposables.create()
         }
