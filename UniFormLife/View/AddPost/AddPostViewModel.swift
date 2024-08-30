@@ -11,13 +11,14 @@ import RxCocoa
 import UIKit
 
 final class AddPostViewModel: ViewModelType {
-    let sizePickerData = Observable.just(["XS(85)", "S(90)", "M(95)", "L(100)", "XL(105)", "XXL(110)"])
-    let conditionPickerData = Observable.just(["새 상품", "거의 새것", "중고 상품"])
-    let seasonPickerData = Observable.just(["01-02", "02-03", "03-04", "04-05", "05-06", "06-07", "07-08", "08-09", "09-10", "10-11", "11-12", "12-13", "13-14", "14-15", "15-16", "16-17", "17-18", "18-19", "19-20", "20-21", "21-22", "22-23", "23-24", "24-25"])
-    let leaguePickerData = Observable.just(["프리미어리그", "라리가", "세리에A", "리그 1", "K 리그", "국가대표", "기타"])
+    let sizePickerData = Observable.just(["사이즈","XS(85)", "S(90)", "M(95)", "L(100)", "XL(105)", "XXL(110)"])
+    let conditionPickerData = Observable.just(["상품 상태","새상품", "아주 좋은 상태", "약간의 사용감", "사용감 있음"])
+    let seasonPickerData = Observable.just(["시즌","01-02", "02-03", "03-04", "04-05", "05-06", "06-07", "07-08", "08-09", "09-10", "10-11", "11-12", "12-13", "13-14", "14-15", "15-16", "16-17", "17-18", "18-19", "19-20", "20-21", "21-22", "22-23", "23-24", "24-25"])
+    let leaguePickerData = Observable.just(["리그","프리미어리그", "라리가", "세리에A","분데스리가", "리그 1", "K 리그", "국가대표", "기타"])
     
     let disposeBag = DisposeBag()
     let imageArray = BehaviorSubject<[UIImage?]>(value: [nil])
+    private let uploadSuccessTrigger = PublishSubject<Void>()
     struct Input {
         let addPhotoTapped: Observable<Void>
         let selectedImages: Observable<[UIImage?]>
@@ -39,6 +40,8 @@ final class AddPostViewModel: ViewModelType {
         let seasonPickerData: Observable<[String]>
         let leaguePickerData: Observable<[String]>
         let selectedImagesCount: Observable<Int>
+        let uploadSuccess: Observable<Void>
+        let addPhotoTapped: Observable<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -55,45 +58,34 @@ final class AddPostViewModel: ViewModelType {
             .map { images in
                 images.filter { $0 != nil }.count
             }
-        let postRequestModel = Observable.combineLatest(
-            input.title,
-            input.content,
-            input.price,
-            input.sizeSelected,
-            input.conditionSelected,
-            input.seasonSelected,
-            input.leagueSelected,
-            imageArray.compactMap { $0 as? [String] } // files 추가
-        ) { title, content, price, size, condition, season, league, files in
-            return PostRequestModel(
-                title: title,
-                content: content,
-                price: price,
-                size: size,
-                condition: condition,
-                season: season,
-                league: league,
-                files: files
-            )
-        }
-        
+        let maxImageCount = 5
+        let addPhoto = input.addPhotoTapped
+            .withLatestFrom(selectedImagesCount)
+            .map { count -> String? in
+                if count >= maxImageCount {
+                    return "사진은 최대 \(maxImageCount)장까지 선택할 수 있습니다."
+                } else {
+                    return nil
+                }
+            }
         input.completeButtonTapped
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(Observable.combineLatest(
-                imageArray,  // 업로드할 이미지 배열
+                imageArray,  // 서버 통신으로 받아온 업로드할 이미지 배열
                 input.title,  // 제목
                 input.content,  // 내용
-                input.price,  // 가격 (String)
-                input.sizeSelected,  // 사이즈
-                input.conditionSelected,  // 상태
-                input.seasonSelected,  // 시즌
-                input.leagueSelected  // 리그
+                input.price,  // 가격
+                input.sizeSelected.filter { $0 != "사이즈" },
+                input.conditionSelected.filter { $0 != "상품 상태" },
+                input.seasonSelected.filter { $0 != "시즌" },
+                input.leagueSelected.filter { $0 != "리그" }
             ))
             .map { images, title, content, price, size, condition, season, league in
                 (
-                    images.compactMap { $0 },  // nil이 아닌 이미지를 필터링
+                    images.compactMap { $0 },
                     title,
                     content,
-                    Int(price) ?? 0,  // String을 Int로 변환, 변환 실패 시 기본값 0
+                    Int(price) ?? 0,
                     size,
                     condition,
                     season,
@@ -106,15 +98,15 @@ final class AddPostViewModel: ViewModelType {
                     images: images,
                     title: title,
                     content: content,
-                    price: price,  // 여기서 Int 타입의 price를 사용
+                    price: price,
                     size: size,
                     condition: condition,
                     season: season,
-                    league: productID  // 변환된 product_id를 사용
+                    league: productID
                 )
             }
             .disposed(by: disposeBag)
-        
+       
         return Output(
             images: imageArray.asObservable(),
             isPlaceholderHidden: isPlaceholderHidden,
@@ -122,7 +114,7 @@ final class AddPostViewModel: ViewModelType {
             conditionPickerData: conditionPickerData,
             seasonPickerData: seasonPickerData,
             leaguePickerData: leaguePickerData,
-            selectedImagesCount: selectedImagesCount
+            selectedImagesCount: selectedImagesCount, uploadSuccess: uploadSuccessTrigger, addPhotoTapped: addPhoto
         )
     }
     private func mapLeagueToProductID(league: String) -> String {
@@ -133,8 +125,10 @@ final class AddPostViewModel: ViewModelType {
             return "uniformLife_LaLiga"
         case "세리에A":
             return "uniformLife_SerieA"
+        case "분데스리가":
+            return "uniformLife_Bundesliga"
         case "리그 1":
-            return "uniformLife_Ligue1"
+            return "uniformLife_League1"
         case "K 리그":
             return "uniformLife_KLeague"
         case "국가대표":
@@ -170,23 +164,21 @@ final class AddPostViewModel: ViewModelType {
             .disposed(by: disposeBag)
     }
     
-    
     private func uploadPostRequest(_ postRequestModel: UploadPostQuery) {
         NetworkManager.shared.callRequest(router: .uploadPost(postData: postRequestModel), type: PostData.self)
             .subscribe(onSuccess: { result in
                 switch result {
                 case .success(let fetchPost):
                     print("업로드 성공: \(fetchPost)")
-                    // 서버에서 반환된 fetchPost 데이터를 활용
+                    self.uploadSuccessTrigger.onNext(())
                 case .failure(let error):
                     print("업로드 실패: \(error)")
-                    // 필요 시 상태 코드 처리
+                    //MARK: 상태코드 처리
                 }
             }, onFailure: { error in
                 print("요청 실패: \(error)")
             })
             .disposed(by: disposeBag)
-    
     }
 }
 

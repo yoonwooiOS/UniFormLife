@@ -11,8 +11,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class AddPostViewController: BaseViewController  {
-   
+final class AddPostViewController: BaseViewController  {
+    private var currentImages = [UIImage]()
     private let images = BehaviorSubject<[UIImage?]>(value: [nil])
     private let selectedImages = PublishSubject<[UIImage?]>()
     private let imageView1 = UIImageView()
@@ -55,6 +55,7 @@ class AddPostViewController: BaseViewController  {
     private let uploadButton = UIBarButtonItem(title: "등록", style: .plain, target: nil, action: nil).then {
         $0.tintColor = Color.black
     }
+    
     private let completeButton = UIButton().then {
         $0.setTitle("작성 완료", for: .normal)
         $0.setTitleColor(.white, for: .normal)
@@ -68,19 +69,22 @@ class AddPostViewController: BaseViewController  {
     override func bind() {
         let addPhotoTapped = collectionView.rx.itemSelected
             .filter { $0.row == 0 }
+            .do(onNext: { [weak self] _ in
+                self?.selectedImages.onNext([])
+            })
             .map { _ in }
         let sizeSelected = sizePickerView.rx.modelSelected(String.self)
-               .map { $0.first ?? "" }
-              
-           let conditionSelected = conditionPickerView.rx.modelSelected(String.self)
-               .map { $0.first ?? "" }
-              
-           let seasonSelected = seasonsPickerView.rx.modelSelected(String.self)
-               .map { $0.first ?? "" }
-              
-           let leagueSelected = leaguePickerview.rx.modelSelected(String.self)
-               .map { $0.first ?? "" }
-              
+            .map { $0.first ?? "" }
+        
+        let conditionSelected = conditionPickerView.rx.modelSelected(String.self)
+            .map { $0.first ?? "" }
+        
+        let seasonSelected = seasonsPickerView.rx.modelSelected(String.self)
+            .map { $0.first ?? "" }
+        
+        let leagueSelected = leaguePickerview.rx.modelSelected(String.self)
+            .map { $0.first ?? "" }
+        
         let input = AddPostViewModel.Input(
             addPhotoTapped: addPhotoTapped,
             selectedImages: selectedImages,
@@ -113,7 +117,8 @@ class AddPostViewController: BaseViewController  {
                     return cell
                 }
             }
-            .disposed(by: disposeBag) 
+            .disposed(by: disposeBag)
+        //삭제
         collectionView.rx.itemSelected
             .filter { $0.row != 0 }
             .withLatestFrom(output.images) { indexPath, images in
@@ -127,53 +132,65 @@ class AddPostViewController: BaseViewController  {
             .bind(to: viewModel.imageArray)
             .disposed(by: disposeBag)
         
-        input.addPhotoTapped
-            .subscribe(onNext: { [weak self] in
-                self?.openGallery()
+        output.addPhotoTapped
+            .subscribe(onNext: { [weak self] message in
+                if let message = message {
+                    // 알림 메시지가 있는 경우
+                    let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self?.present(alert, animated: true)
+                } else {
+                    // 알림 메시지가 없는 경우, 갤러리를 여는 로직
+                    self?.openGallery()
+                }
             })
             .disposed(by: disposeBag)
-       
+        
         contentTextView.rx.text
             .orEmpty
             .map { !$0.isEmpty }
             .bind(to: placeholderLabel.rx.isHidden)
             .disposed(by: disposeBag)
         output.sizePickerData
-               .bind(to: sizePickerView.rx.itemTitles) { _, item in item }
-               .disposed(by: disposeBag)
-
-           output.conditionPickerData
-               .bind(to: conditionPickerView.rx.itemTitles) { _, item in item }
-               .disposed(by: disposeBag)
-
-           output.seasonPickerData
-               .bind(to: seasonsPickerView.rx.itemTitles) { _, item in item }
-               .disposed(by: disposeBag)
-
-           output.leaguePickerData
-               .bind(to: leaguePickerview.rx.itemTitles) { _, item in item }
-               .disposed(by: disposeBag)
-           sizeSelected
-               .bind(to: sizeTextField.rx.text)
-               .disposed(by: disposeBag)
-           conditionSelected
-               .bind(to: conditionTextField.rx.text)
-               .disposed(by: disposeBag)
-           seasonSelected
-               .bind(to: seasonTextField.rx.text)
-               .disposed(by: disposeBag)
-           
-           leagueSelected
-               .bind(to: leagueTextField.rx.text)
-               .disposed(by: disposeBag)
-           output.isPlaceholderHidden
-               .bind(to: placeholderLabel.rx.isHidden)
-               .disposed(by: disposeBag)
-           completeButton.rx.tap
-               .subscribe(onNext: {
-                   print("버튼탭")
-               })
-               .disposed(by: disposeBag)
+            .bind(to: sizePickerView.rx.itemTitles) { _, item in item }
+            .disposed(by: disposeBag)
+        
+        output.conditionPickerData
+            .bind(to: conditionPickerView.rx.itemTitles) { _, item in item }
+            .disposed(by: disposeBag)
+        
+        output.seasonPickerData
+            .bind(to: seasonsPickerView.rx.itemTitles) { _, item in item }
+            .disposed(by: disposeBag)
+        
+        output.leaguePickerData
+            .bind(to: leaguePickerview.rx.itemTitles) { _, item in item }
+            .disposed(by: disposeBag)
+        sizeSelected
+            .bind(to: sizeTextField.rx.text)
+            .disposed(by: disposeBag)
+        conditionSelected
+            .bind(to: conditionTextField.rx.text)
+            .disposed(by: disposeBag)
+        seasonSelected
+            .bind(to: seasonTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        leagueSelected
+            .bind(to: leagueTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.isPlaceholderHidden
+            .bind(to: placeholderLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.uploadSuccess
+            .bind(with: self) { owner, _ in
+                owner.resetTextField()
+                owner.showBasicAlert("게시글 업로드 완료")
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     override func setUpHierarchy() {
@@ -243,15 +260,23 @@ class AddPostViewController: BaseViewController  {
             make.height.equalTo(44)
         }
         completeButton.snp.makeConstraints { make in
-            make.top.equalTo(leagueTextField.snp.bottom).offset(16)
-            make.leading.trailing.equalTo(contentView).inset(16)
+            make.top.equalTo(leagueTextField.snp.bottom)
+            make.horizontalEdges.equalTo(contentView).inset(16)
             make.height.equalTo(44)
-            make.bottom.equalTo(contentView).offset(-24)
+            make.bottom.equalTo(contentView).offset(-44)
         }
     }
-    
     override func setUpNavigationTitle() {
         self.navigationItem.title = "유니폼 등록"
+    }
+    private func resetTextField() {
+        self.titleTextField.text = ""
+        placeholderLabel.text = "내용을 입력하세요"
+        priceTextField.text = ""
+        sizeTextField.text = ""
+        conditionTextField.text = ""
+        seasonTextField.text = ""
+        leagueTextField.text = ""
     }
 }
 
@@ -260,32 +285,28 @@ extension AddPostViewController: PHPickerViewControllerDelegate {
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 5
         configuration.filter = .images
-        
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
-    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         handlePickedResults(results)
     }
-    
     private func handlePickedResults(_ results: [PHPickerResult]) {
+        let maxImageCount = 5
         var selectedImages = [UIImage]()
         let dispatchGroup = DispatchGroup()
-        
-        for result in results {
+        for result in results.prefix(maxImageCount) {
             dispatchGroup.enter()
             result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
                 defer { dispatchGroup.leave() }
-                guard let self = self else { return }
+                guard self != nil else { return }
                 if let image = object as? UIImage {
                     selectedImages.append(image)
                 }
             }
         }
-        
         dispatchGroup.notify(queue: .main) {
             self.selectedImages.onNext(selectedImages)
         }

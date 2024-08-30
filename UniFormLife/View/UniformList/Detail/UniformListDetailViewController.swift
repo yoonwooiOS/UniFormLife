@@ -13,7 +13,8 @@ import Then
 
 final class UniformListDetailViewController: BaseViewController {
     var postData: PostData?
-    private let imageNames = ["man1", "man2", "man3"]
+//
+    private let imageNamesSubject = BehaviorSubject<[String]>(value: [])
     
     private let baseScrollView = UIScrollView().then {
         $0.showsVerticalScrollIndicator = true
@@ -31,7 +32,8 @@ final class UniformListDetailViewController: BaseViewController {
     private let pageControl = UIPageControl().then {
         $0.currentPage = 0
         $0.pageIndicatorTintColor = .lightGray
-        $0.currentPageIndicatorTintColor = .black
+        $0.currentPageIndicatorTintColor = .white
+       
     }
     private let userProfileBaseView = UIView().then { _ in }
     private let userProfileImageView = UIImageView().then {
@@ -48,7 +50,7 @@ final class UniformListDetailViewController: BaseViewController {
     }
     private let likeButton = UIButton().then {
         $0.tintColor = Color.black
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .large)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .large)
         $0.setImage(UIImage(systemName: "heart", withConfiguration: largeConfig), for: .normal)
     }
     private let followersLabel = UILabel().then {
@@ -83,14 +85,9 @@ final class UniformListDetailViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     
     private let viewModel = UniformListDetailViewModel()
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpImages()
+        
         setUpImageBinding()
         guard let postData else { return }
         postTitle.text = postData.title
@@ -98,32 +95,42 @@ final class UniformListDetailViewController: BaseViewController {
         usedLabel.text = postData.content1
         sizeLabel.text = postData.content2
         yearLabel.text = postData.content3
-        print(postData.post_id)
+        
+        imageNamesSubject.onNext(postData.files)
+            imageNamesSubject
+                .observe(on: MainScheduler.instance)
+                .bind(with: self, onNext: { owner, images in
+                    owner.setUpImages(with: images)
+                })
+                .disposed(by: disposeBag)
     }
-    
     override func bind() {
         let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap)
         let output = viewModel.transform(input: input)
         output.isLiked
             .bind(with: self, onNext: { owner, isLiked in
-//                print(isLiked)
                 let imageName = isLiked ? "heart.fill" : "heart"
                 owner.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
                 owner.likeButton.tintColor = isLiked ? .red : .lightGray
             })
             .disposed(by: disposeBag)
-        
         scrollView.rx.contentOffset
             .map { Int($0.x / self.view.frame.width) }
             .bind(to: pageControl.rx.currentPage)
             .disposed(by: disposeBag)
     }
-    
+    private func setUpImageBinding() {
+           scrollView.rx.contentOffset
+               .map { Int($0.x / self.view.frame.width) }
+               .bind(to: pageControl.rx.currentPage)
+               .disposed(by: disposeBag)
+       }
     override func setUpHierarchy() {
-        [baseScrollView, seperator, mainBaseView].forEach {
+        [baseScrollView, seperator].forEach {
             view.addSubview($0)
         }
         baseScrollView.addSubview(contentView)
+        baseScrollView.addSubview(mainBaseView)
         [scrollView, pageControl, userProfileBaseView].forEach {
             contentView.addSubview($0)
         }
@@ -212,14 +219,14 @@ final class UniformListDetailViewController: BaseViewController {
         contentView.snp.makeConstraints { make in
             make.bottom.equalTo(userProfileBaseView.snp.bottom).offset(500)
         }
-        
     }
     
-    private func setUpImages() {
+    private func setUpImages(with imageNames: [String]) {
+        scrollView.subviews.forEach { $0.removeFromSuperview() }
         var previousImageView: UIImageView? = nil
         for (_, imageName) in imageNames.enumerated() {
             let imageView = UIImageView().then {
-                $0.image = UIImage(named: imageName)
+                $0.setDownloadToImageView(urlString: imageName)
                 $0.contentMode = .scaleToFill
                 $0.clipsToBounds = true
             }
@@ -240,12 +247,11 @@ final class UniformListDetailViewController: BaseViewController {
             make.trailing.equalToSuperview()
         }
         pageControl.numberOfPages = imageNames.count
+        updatePageControl(imageNames: imageNames)
+    }
+    private func updatePageControl(imageNames: [String]) {
+        pageControl.numberOfPages = imageNames.count
+        pageControl.isHidden = imageNames.count <= 1
     }
     
-    private func setUpImageBinding() {
-        scrollView.rx.contentOffset
-            .map { Int($0.x / self.view.frame.width) }
-            .bind(to: pageControl.rx.currentPage)
-            .disposed(by: disposeBag)
-    }
 }
