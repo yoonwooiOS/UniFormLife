@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 enum mode {
     case present
@@ -54,6 +55,7 @@ extension UIViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }

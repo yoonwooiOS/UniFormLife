@@ -19,6 +19,7 @@ final class RoundRectTextField: UITextField {
         layer.borderWidth = 1.0
         layer.cornerRadius = 5.0
         self.inputView = inputView
+        inputView?.selectRow(0, inComponent: 0, animated: false)
         addDoneToolbar()
     }
     private func addDoneToolbar() {
