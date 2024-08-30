@@ -15,6 +15,7 @@ final class UniformListViewController: BaseViewController {
     let leagueCollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: CollectionView.leagueCollectionViewlayout())
         view.register(LeagueFilterCollectionViewCell.self, forCellWithReuseIdentifier: LeagueFilterCollectionViewCell.identifier)
+        view.showsHorizontalScrollIndicator = false
         return view
     }()
     let seperator = {
@@ -25,26 +26,26 @@ final class UniformListViewController: BaseViewController {
     let uniformListCollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: CollectionView.uniformLayout())
         view.register(UniformListCollectionViewCell.self, forCellWithReuseIdentifier: UniformListCollectionViewCell.identifier)
+        view.showsVerticalScrollIndicator = false
 //        view.backgroundColor = .lightGray
         return view
     }()
     let disposeBag = DisposeBag()
     let viewModel = UniformListViewModel()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(false)
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.layoutIfNeeded()
-        
-    }
     override func bind() {
         
         let leagueCellTrigger = leagueCollectionView.rx.itemSelected
             .map{ $0.row }
         let uniformPostTapped = uniformListCollectionView.rx.modelSelected(PostData.self)
-        let input = UniformListViewModel.Input(viewdidLoadTrigger: Observable.just(()), leagueCellTrigger: leagueCellTrigger, uniformPostTapped: uniformPostTapped.asObservable())
+        let prefetchTrigger = uniformListCollectionView.rx.prefetchItems
+                   .map { $0.first }
+                   .compactMap { $0 }
+                   .do(onNext: { value in
+                       print(value)
+                   })
+                   .distinctUntilChanged()
+
+        let input = UniformListViewModel.Input(viewdidLoadTrigger: Observable.just(()), leagueCellTrigger: leagueCellTrigger, uniformPostTapped: uniformPostTapped, prefetchTrigger: prefetchTrigger)
         let output = viewModel.transform(input: input)
         output.continentalLeague
             .bind(to: leagueCollectionView.rx.items(cellIdentifier: LeagueFilterCollectionViewCell.identifier, cellType: LeagueFilterCollectionViewCell.self)) { (row, element, cell) in
@@ -53,7 +54,6 @@ final class UniformListViewController: BaseViewController {
             .disposed(by: disposeBag)
         output.uniformListData
             .bind(to: uniformListCollectionView.rx.items(cellIdentifier: UniformListCollectionViewCell.identifier, cellType: UniformListCollectionViewCell.self)) {(row, element, cell) in
-                print("Row: \(row), Element: \(element)")
                 cell.setUpCell(data: element)
             }
             .disposed(by: disposeBag)
@@ -64,6 +64,7 @@ final class UniformListViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
     }
     override func setUpHierarchy() {
         view.addSubview(leagueCollectionView)
@@ -89,6 +90,5 @@ final class UniformListViewController: BaseViewController {
     }
     override func setUpNavigationTitle() {
         navigationItem.title = "폼생폼사"
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
