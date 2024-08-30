@@ -18,7 +18,7 @@ enum Router: TargetType {
     case withdrawAccount
     case uploadPostImage
     case uploadPost(postData: UploadPostQuery)
-    case fetchPost(productID: String)
+    case fetchPost(productID: String, cursor: String?, limit: String?)
     case fetchspecificPost
     case editPost(data: EditPostQuery)
     case deletePost(postID: String)
@@ -77,8 +77,15 @@ enum Router: TargetType {
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .fetchPost(let productID):
-            return [URLQueryItem(name: "product_id", value: productID)]
+        case .fetchPost(let productID, let cursor, let limit):
+            var queryItems = [
+                URLQueryItem(name: "product_id", value: productID),
+                URLQueryItem(name: "limit", value: limit)
+            ]
+            if let cursor = cursor, cursor != "0" {
+                queryItems.append(URLQueryItem(name: "next", value: cursor))
+            }
+            return queryItems
         default:
             return nil
         }

@@ -25,8 +25,8 @@ struct PostData: Decodable {
     let content1: String
     let content2: String
     let content3: String
-    let content4: String
-    let content5: String
+    let content4: String?
+    let content5: String?
     let createdAt: String
     let creator: Creator
     let files: [String]
@@ -34,8 +34,6 @@ struct PostData: Decodable {
     let likes2: [String]
     let hashTags: [String]
 //    let comments: [Comments]
-
-    
 }
 
 struct Creator: Codable {
