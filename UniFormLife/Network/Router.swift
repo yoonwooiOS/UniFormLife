@@ -27,7 +27,7 @@ enum Router: TargetType {
     case editComment(postID: String, commentID: String)
     case deleteComment(postID: String, commentID: String)
     case likePost(postID: String, likeState: Bool)
-    
+    case paymentValidation(validateData: PaymentValidateQuery)
     
     
     var method: Alamofire.HTTPMethod {
@@ -67,6 +67,8 @@ enum Router: TargetType {
         case .deleteComment(postID: let postID, commentID: let commentID):
             return .delete
         case .likePost(postID: let postID, likeState: let likeState):
+            return .post
+        case .paymentValidation(_):
             return .post
         }
     }
@@ -113,6 +115,9 @@ enum Router: TargetType {
         case .uploadPost(let postData):
                 let encoding = JSONEncoder()
                 return try? encoding.encode(postData)
+        case .paymentValidation(let validData):
+                let encoding = JSONEncoder()
+                return try? encoding.encode(validData)
         default:
             return nil
         }
@@ -158,7 +163,9 @@ extension Router {
             return "posts/\(postID)/comments/\(commentID)"
         case .likePost(let postID, _):
                 return "posts/\(postID)/like"
-            }
+        case .paymentValidation(validateData: let validateData):
+            return "payments/validation"
+        }
     }
     var header: [String: String] {
         switch self {
@@ -261,6 +268,12 @@ extension Router {
                 Header.sesacKey.rawValue: APIKey.key
             ]
         case .likePost(postID: let postID, _):
+            return [
+                Header.authorization.rawValue: UserDefaultsManeger.shared.token,
+                Header.contentType.rawValue: Header.json.rawValue,
+                Header.sesacKey.rawValue : APIKey.key
+            ]
+        case .paymentValidation(validateData: let validateData):
             return [
                 Header.authorization.rawValue: UserDefaultsManeger.shared.token,
                 Header.contentType.rawValue: Header.json.rawValue,
