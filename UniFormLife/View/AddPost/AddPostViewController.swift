@@ -260,7 +260,7 @@ final class AddPostViewController: BaseViewController  {
             make.height.equalTo(44)
         }
         completeButton.snp.makeConstraints { make in
-            make.top.equalTo(leagueTextField.snp.bottom)
+            make.top.equalTo(leagueTextField.snp.bottom).offset(16)
             make.horizontalEdges.equalTo(contentView).inset(16)
             make.height.equalTo(44)
             make.bottom.equalTo(contentView).offset(-44)
