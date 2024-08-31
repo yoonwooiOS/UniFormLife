@@ -13,7 +13,7 @@ import Then
 
 final class UniformListDetailViewController: BaseViewController {
     var postData: PostData?
-//
+    //
     private let imageNamesSubject = BehaviorSubject<[String]>(value: [])
     
     private let baseScrollView = UIScrollView().then {
@@ -33,13 +33,13 @@ final class UniformListDetailViewController: BaseViewController {
         $0.currentPage = 0
         $0.pageIndicatorTintColor = .lightGray
         $0.currentPageIndicatorTintColor = .white
-       
+        
     }
     private let userProfileBaseView = UIView().then { _ in }
     private let userProfileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "son")
-//        $0.backgroundColor = .green
+        //        $0.backgroundColor = .green
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 30
     }
@@ -69,19 +69,20 @@ final class UniformListDetailViewController: BaseViewController {
         return view
     }()
     private let mainBaseView = UIView().then { _ in
-//        $0.backgroundColor = .green
+        //        $0.backgroundColor = .green
     }
     private lazy var postTitle = UILabel().then {
-        $0.font = Font.bold18
+        $0.font = Font.bold21
         $0.numberOfLines = 0
     }
     private lazy var content = UILabel().then {
-        $0.font = Font.regular14
+        $0.font = Font.regular16
         $0.numberOfLines = 0
     }
-    private let usedLabel = AddPaddingLabel().then { _ in }
-    private let sizeLabel = AddPaddingLabel().then { _ in }
-    private let yearLabel = AddPaddingLabel().then { _ in }
+    private let usedLabel = AddPaddingLabel()
+    private let sizeLabel = AddPaddingLabel()
+    private let yearLabel = AddPaddingLabel()
+    private let paymentButton = BaseButton(title: "구매하기")
     private let disposeBag = DisposeBag()
     
     private let viewModel = UniformListDetailViewModel()
@@ -89,23 +90,11 @@ final class UniformListDetailViewController: BaseViewController {
         super.viewDidLoad()
         
         setUpImageBinding()
-        guard let postData else { return }
-        postTitle.text = postData.title
-        content.text = postData.content
-        usedLabel.text = postData.content1
-        sizeLabel.text = postData.content2
-        yearLabel.text = postData.content3
         
-        imageNamesSubject.onNext(postData.files)
-            imageNamesSubject
-                .observe(on: MainScheduler.instance)
-                .bind(with: self, onNext: { owner, images in
-                    owner.setUpImages(with: images)
-                })
-                .disposed(by: disposeBag)
+        
     }
     override func bind() {
-        let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap)
+        let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap, paymentButtonTapped: paymentButton.rx.tap)
         let output = viewModel.transform(input: input)
         output.isLiked
             .bind(with: self, onNext: { owner, isLiked in
@@ -114,22 +103,38 @@ final class UniformListDetailViewController: BaseViewController {
                 owner.likeButton.tintColor = isLiked ? .red : .lightGray
             })
             .disposed(by: disposeBag)
+        output.paymentButtonTapped
+            .bind(with: self) { owner, _ in
+                owner.goToOtehrVCwithCompletionHandler(vc: PaymentViewController(), mode: .push, tabbarHidden: true) { vc in
+                    vc.postData = owner.postData
+                    
+                }
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    private func setUpImageBinding() {
+        guard let postData else { return }
+        imageNamesSubject.onNext(postData.files)
+        imageNamesSubject
+            .observe(on: MainScheduler.instance)
+            .bind(with: self, onNext: { owner, images in
+                owner.setUpImages(with: images)
+            })
+            .disposed(by: disposeBag)
+        
         scrollView.rx.contentOffset
             .map { Int($0.x / self.view.frame.width) }
             .bind(to: pageControl.rx.currentPage)
             .disposed(by: disposeBag)
+        
     }
-    private func setUpImageBinding() {
-           scrollView.rx.contentOffset
-               .map { Int($0.x / self.view.frame.width) }
-               .bind(to: pageControl.rx.currentPage)
-               .disposed(by: disposeBag)
-       }
     override func setUpHierarchy() {
-        [baseScrollView, seperator].forEach {
+        [baseScrollView, seperator,paymentButton].forEach {
             view.addSubview($0)
         }
         baseScrollView.addSubview(contentView)
+        
         baseScrollView.addSubview(mainBaseView)
         [scrollView, pageControl, userProfileBaseView].forEach {
             contentView.addSubview($0)
@@ -213,14 +218,26 @@ final class UniformListDetailViewController: BaseViewController {
             make.leading.equalTo(sizeLabel.snp.trailing).offset(4)
         }
         content.snp.makeConstraints { make in
-            make.top.equalTo(yearLabel.snp.bottom).offset(baseOffset)
-            make.horizontalEdges.equalToSuperview().offset(baseOffset)
+            make.top.equalTo(yearLabel.snp.bottom).offset(baseOffset).offset(8)
+            make.leading.trailing.equalToSuperview().inset(baseOffset)
+            make.bottom.equalToSuperview().offset(-60)
         }
-        contentView.snp.makeConstraints { make in
-            make.bottom.equalTo(userProfileBaseView.snp.bottom).offset(500)
+        paymentButton.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(baseOffset)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
         }
+        //        contentView.snp.makeConstraints { make in
+        //            make.bottom.equalTo(userProfileBaseView.snp.bottom).offset(900)
+        //        }
     }
-    
+    override func setUpView() {
+        guard let postData else { return }
+        postTitle.text = postData.title
+        content.text = postData.content
+        usedLabel.text = postData.content1
+        sizeLabel.text = postData.content2
+        yearLabel.text = postData.content3
+    }
     private func setUpImages(with imageNames: [String]) {
         scrollView.subviews.forEach { $0.removeFromSuperview() }
         var previousImageView: UIImageView? = nil

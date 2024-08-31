@@ -14,14 +14,17 @@ final class UniformListDetailViewModel: ViewModelType {
     
     struct Input {
         let likeButtonTapped: ControlEvent<Void>
+        let paymentButtonTapped: ControlEvent<Void>
     }
     struct Output {
         let isLiked: Observable<Bool>
+        let paymentButtonTapped: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
    
         let isLiked = BehaviorRelay<Bool>(value: false)
+        let isLikedObservable = isLiked.asObservable()
         input.likeButtonTapped
             .withLatestFrom(isLiked)
             .map { !$0 }
@@ -40,7 +43,7 @@ final class UniformListDetailViewModel: ViewModelType {
                 }
             })
             .disposed(by: disposeBag)
-               let isLikedObservable = isLiked.asObservable()
-               return Output(isLiked: isLikedObservable)
+            
+        return Output(isLiked: isLikedObservable, paymentButtonTapped: input.paymentButtonTapped)
     }
 }

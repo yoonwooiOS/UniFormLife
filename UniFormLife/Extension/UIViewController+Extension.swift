@@ -14,7 +14,7 @@ enum mode {
 }
 
 extension UIViewController {
-    func goToOtehrVCwithCompletionHandler<T: UIViewController>(vc: T, mode: mode, completionHandler: @escaping (T) -> Void ) {
+    func goToOtehrVCwithCompletionHandler<T: UIViewController>(vc: T, mode: mode,tabbarHidden: Bool? = nil, completionHandler: @escaping (T) -> Void ) {
         let vc = vc
         switch mode {
         case .present:
@@ -24,11 +24,13 @@ extension UIViewController {
                 completionHandler(vc)
             }
         case .push:
+            vc.hidesBottomBarWhenPushed = tabbarHidden ?? false
             navigationController?.pushViewController(vc, animated: true)
+           
         }
         completionHandler(vc)
     }
-    func goToOtehrVC(vc: UIViewController, mode: mode) {
+    func goToOtehrVC(vc: UIViewController, mode: mode, tabbarHidden: Bool? = nil) {
         let vc = vc
         switch mode {
         case .present:
@@ -36,9 +38,11 @@ extension UIViewController {
             vc.modalTransitionStyle = .flipHorizontal
             present(vc, animated: true)
         case .push:
+            vc.hidesBottomBarWhenPushed = tabbarHidden ?? false
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
     func goToRootView(rootView: UIViewController) {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
@@ -49,6 +53,14 @@ extension UIViewController {
         let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
           alert.addAction(UIAlertAction(title: "확인", style: .default))
           self.present(alert, animated: true)
+    }
+    func showBasicAlertWithCompletionHandler(_ title: String, completionHandler: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            completionHandler()
+        }
+        alert.addAction(confirmAction)
+        self.present(alert, animated: true)
     }
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))

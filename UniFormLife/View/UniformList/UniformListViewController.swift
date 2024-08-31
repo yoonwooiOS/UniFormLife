@@ -59,7 +59,7 @@ final class UniformListViewController: BaseViewController {
             .disposed(by: disposeBag)
         output.uniformPostTapped
             .bind(with: self) { owner, postData in
-                owner.goToOtehrVCwithCompletionHandler(vc: UniformListDetailViewController(), mode: .push) { vc in
+                owner.goToOtehrVCwithCompletionHandler(vc: UniformListDetailViewController(), mode: .push, tabbarHidden: true) { vc in
                     vc.postData = postData
                 }
             }

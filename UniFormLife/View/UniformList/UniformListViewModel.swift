@@ -22,6 +22,7 @@ final class UniformListViewModel: ViewModelType {
         let leagueCellTrigger: Observable<Int>
         let uniformPostTapped:  ControlEvent<PostData>
         let prefetchTrigger: Observable<IndexPath>
+        
     }
     struct Output {
         let uniformListData: BehaviorRelay<[PostData]>
