@@ -36,25 +36,27 @@ final class UniformListViewModel: ViewModelType {
         let currentPostDataCount = uniformListData
             .map { $0.count }
             .distinctUntilChanged()
+        
         Observable.combineLatest(input.viewdidLoadTrigger, productID)
-            .flatMapLatest { _, productID in
-                NetworkManager.shared.callRequest(router: .fetchPost(productID: productID, cursor: "", limit: "8"), type: FetchPost.self)
+            .flatMap { _, productID -> Single<Result<FetchPost, Error>> in
+                return NetworkService.shared.fetchPost(query: FetchPostQuery(productID: productID, cursor: nil, limit: "8"))
             }
-            .bind(with: self) { owner, result in
+            .subscribe(onNext: { [weak self] result in
                 switch result {
                 case .success(let value):
-                    owner.nextCursor.accept(value.nextCursor)
+                    self?.nextCursor.accept(value.nextCursor)
                     uniformListData.accept(value.data)
                 case .failure(let error):
                     print("fetchPostError: \(error)")
                 }
-            }
+            })
             .disposed(by: disposeBag)
+
         input.prefetchTrigger
             .do(onNext: { _ in
                 print("프리패칭")
             })
-            .filter {  indexPath in
+            .filter { indexPath in
                 if self.nextCursor.value == "0" {
                     return false
                 } else {
@@ -62,25 +64,25 @@ final class UniformListViewModel: ViewModelType {
                     return remainingItems <= 12 && self.nextCursor.value != "0" && !self.isLoading.value
                 }
             }
-            .flatMapLatest { _ in
+            .flatMap { _ -> Single<Result<FetchPost, Error>> in
                 self.isLoading.accept(true)
-                return NetworkManager.shared.callRequest(router: .fetchPost(productID: self.productID.value, cursor: self.nextCursor.value, limit: "2"), type: FetchPost.self)
+                return NetworkService.shared.fetchPost(query: FetchPostQuery(productID: self.productID.value, cursor: self.nextCursor.value, limit: "2"))
             }
-            .bind(with: self) { owner, result in
-                owner.isLoading.accept(false)
+            .subscribe(onNext: { [weak self] result in
+                guard let self = self else { return }
+                self.isLoading.accept(false)
                 switch result {
                 case .success(let value):
                     print("프리패치 통신중")
                     var currentData = uniformListData.value
                     currentData.append(contentsOf: value.data)
                     uniformListData.accept(currentData)
-                    owner.nextCursor.accept(value.nextCursor)
+                    self.nextCursor.accept(value.nextCursor)
                 case .failure(let error):
                     print("fetchPostError: \(error)")
                 }
-            }
+            })
             .disposed(by: disposeBag)
-        
         input.leagueCellTrigger
             .bind(with: self, onNext: { onwer, indexPath in
                 print(indexPath)

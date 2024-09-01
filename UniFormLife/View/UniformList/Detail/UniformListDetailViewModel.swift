@@ -32,7 +32,7 @@ final class UniformListDetailViewModel: ViewModelType {
             .disposed(by: disposeBag)
         input.likeButtonTapped
             .flatMapLatest { _ in
-                NetworkManager.shared.callRequest(router: .likePost(postID: "66c967cf5056517017a46c0e", likeState: false), type: LikePost.self)
+                NetworkManager.shared.callRequest(router: .likePost(postID: "66c967cf5056517017a46c0e", query: LikeQuery(like_status: false)), type: LikePost.self)
             }
             .bind(with: self, onNext: { owner, result in
                 switch result {

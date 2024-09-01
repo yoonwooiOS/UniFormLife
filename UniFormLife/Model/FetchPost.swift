@@ -33,17 +33,17 @@ struct PostData: Decodable {
     let likes: [String]
     let likes2: [String]
     let hashTags: [String]
-//    let comments: [Comments]
+    let comments: [Comments]
 }
 
-struct Creator: Codable {
+struct Creator: Decodable {
     let user_id: String
     let nick: String
 //    let profileImage: String
 }
 
-struct Comments: Codable {
-    let user_id: String
+struct Comments: Decodable {
+    let comment_id: String
     let content: String
     let createdAt: String
     let creator: Creator

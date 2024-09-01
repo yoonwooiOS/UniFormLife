@@ -26,6 +26,7 @@ class ProfileViewController: BaseViewController {
     
     private let cartButton = UIButton().then {
         $0.setImage(UIImage(systemName: "cart"), for: .normal)
+        
     }
     
     private let profileImageView = UIImageView().then {

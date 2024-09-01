@@ -8,13 +8,23 @@
 import Foundation
 
 struct EditPostQuery: Encodable {
-    let content: String
     let title: String
-    let content1: String?
-    let content2: String?
-    let content3: String?
-    let content4: String?
-    let content5: String?
-    let product_id: String?
-    let files: [String?]
+    let content: String
+    let price: Int?
+    let size: String?
+    let condition: String?
+    let season: String?
+    let league: String?
+    let imageUrls: [String]?
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case content
+        case price
+        case size = "content1"
+        case condition = "content2"
+        case season = "content3"
+        case league = "product_id"
+        case imageUrls = "files"
+    }
 }

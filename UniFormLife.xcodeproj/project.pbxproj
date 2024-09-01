@@ -58,14 +58,35 @@
 		99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */; };
 		99227B362C7DF816000DCA5D /* AddPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99227B352C7DF816000DCA5D /* AddPostViewModel.swift */; };
 		99227B382C7DFBC9000DCA5D /* RoundRectTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99227B372C7DFBC9000DCA5D /* RoundRectTextField.swift */; };
+		99227B492C7F3602000DCA5D /* PostRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99227B482C7F3602000DCA5D /* PostRequestModel.swift */; };
+		99227B4D2C7F5683000DCA5D /* UploadPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99227B4C2C7F5683000DCA5D /* UploadPostQuery.swift */; };
 		992F6BA62C76280900C59543 /* UniformListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BA52C76280900C59543 /* UniformListViewModel.swift */; };
 		992F6BB52C77552000C59543 /* EditPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB42C77552000C59543 /* EditPostQuery.swift */; };
 		992F6BB72C79663D00C59543 /* AddPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */; };
 		992F6BB92C7968A800C59543 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BB82C7968A800C59543 /* CollectionView.swift */; };
 		992F6BBC2C79A9F000C59543 /* UniformListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */; };
-		992F6BBF2C79ABC200C59543 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 992F6BBE2C79ABC200C59543 /* Then */; };
 		992F6BC82C7C98A600C59543 /* UniformListDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */; };
 		992F6BCA2C7CABCA00C59543 /* LikePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F6BC92C7CABCA00C59543 /* LikePost.swift */; };
+		99408B642C7FB5C900544EC1 /* UniformStyleFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B632C7FB5C900544EC1 /* UniformStyleFeedCollectionViewCell.swift */; };
+		99408B712C802F4000544EC1 /* TagImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B702C802F4000544EC1 /* TagImageView.swift */; };
+		99408B732C805FAB00544EC1 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B722C805FAB00544EC1 /* UIImageView+Extension.swift */; };
+		99408B752C8060D300544EC1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B742C8060D300544EC1 /* UIButton+Extension.swift */; };
+		99408B782C821A0900544EC1 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B772C821A0900544EC1 /* AppCoordinator.swift */; };
+		99408B7A2C82257700544EC1 /* NetworkInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B792C82257700544EC1 /* NetworkInterceptor.swift */; };
+		99408B7D2C82D53900544EC1 /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 99408B7C2C82D53900544EC1 /* iamport-ios */; };
+		99408B802C82D71200544EC1 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B7F2C82D71200544EC1 /* PaymentViewController.swift */; };
+		99408B822C82E2EE00544EC1 /* PaymentValidateQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B812C82E2EE00544EC1 /* PaymentValidateQuery.swift */; };
+		99408B842C82E52000544EC1 /* PaymentValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B832C82E52000544EC1 /* PaymentValidation.swift */; };
+		99408B862C82F4A800544EC1 /* PaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B852C82F4A800544EC1 /* PaymentViewModel.swift */; };
+		99408B882C832FB700544EC1 /* DetailViewRecommandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B872C832FB700544EC1 /* DetailViewRecommandCollectionViewCell.swift */; };
+		99408B8B2C83621000544EC1 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B8A2C83621000544EC1 /* NetworkService.swift */; };
+		99408B8E2C8363A600544EC1 /* PostNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B8D2C8363A600544EC1 /* PostNetworkManager.swift */; };
+		99408B902C83665800544EC1 /* FetchPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B8F2C83665800544EC1 /* FetchPostQuery.swift */; };
+		99408B922C84561000544EC1 /* CommnetQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B912C84561000544EC1 /* CommnetQuery.swift */; };
+		99408B942C84568800544EC1 /* CreateComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B932C84568800544EC1 /* CreateComment.swift */; };
+		99408B962C847E0B00544EC1 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B952C847E0B00544EC1 /* LikeQuery.swift */; };
+		99408B982C84887B00544EC1 /* FetchMyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B972C84887B00544EC1 /* FetchMyProfile.swift */; };
+		99408B9A2C8489C000544EC1 /* EditMyprofileQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99408B992C8489C000544EC1 /* EditMyprofileQuery.swift */; };
 		99537D5E2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99537D5D2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift */; };
 		99537D602C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99537D5F2C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift */; };
 		9959C7162C74462D006208CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9959C7152C74462D006208CA /* GoogleService-Info.plist */; };
@@ -122,6 +143,8 @@
 		99008D792C71CD5B00DC836C /* UniformListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListCollectionViewCell.swift; sourceTree = "<group>"; };
 		99227B352C7DF816000DCA5D /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
 		99227B372C7DFBC9000DCA5D /* RoundRectTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRectTextField.swift; sourceTree = "<group>"; };
+		99227B482C7F3602000DCA5D /* PostRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequestModel.swift; sourceTree = "<group>"; };
+		99227B4C2C7F5683000DCA5D /* UploadPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostQuery.swift; sourceTree = "<group>"; };
 		992F6BA52C76280900C59543 /* UniformListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListViewModel.swift; sourceTree = "<group>"; };
 		992F6BB42C77552000C59543 /* EditPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostQuery.swift; sourceTree = "<group>"; };
 		992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaddingLabel.swift; sourceTree = "<group>"; };
@@ -129,6 +152,25 @@
 		992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListDetailViewController.swift; sourceTree = "<group>"; };
 		992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformListDetailViewModel.swift; sourceTree = "<group>"; };
 		992F6BC92C7CABCA00C59543 /* LikePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikePost.swift; sourceTree = "<group>"; };
+		99408B632C7FB5C900544EC1 /* UniformStyleFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniformStyleFeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		99408B702C802F4000544EC1 /* TagImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagImageView.swift; sourceTree = "<group>"; };
+		99408B722C805FAB00544EC1 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		99408B742C8060D300544EC1 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		99408B772C821A0900544EC1 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		99408B792C82257700544EC1 /* NetworkInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptor.swift; sourceTree = "<group>"; };
+		99408B7F2C82D71200544EC1 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		99408B812C82E2EE00544EC1 /* PaymentValidateQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentValidateQuery.swift; sourceTree = "<group>"; };
+		99408B832C82E52000544EC1 /* PaymentValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentValidation.swift; sourceTree = "<group>"; };
+		99408B852C82F4A800544EC1 /* PaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewModel.swift; sourceTree = "<group>"; };
+		99408B872C832FB700544EC1 /* DetailViewRecommandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewRecommandCollectionViewCell.swift; sourceTree = "<group>"; };
+		99408B8A2C83621000544EC1 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		99408B8D2C8363A600544EC1 /* PostNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNetworkManager.swift; sourceTree = "<group>"; };
+		99408B8F2C83665800544EC1 /* FetchPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPostQuery.swift; sourceTree = "<group>"; };
+		99408B912C84561000544EC1 /* CommnetQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommnetQuery.swift; sourceTree = "<group>"; };
+		99408B932C84568800544EC1 /* CreateComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateComment.swift; sourceTree = "<group>"; };
+		99408B952C847E0B00544EC1 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
+		99408B972C84887B00544EC1 /* FetchMyProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMyProfile.swift; sourceTree = "<group>"; };
+		99408B992C8489C000544EC1 /* EditMyprofileQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyprofileQuery.swift; sourceTree = "<group>"; };
 		99537D5D2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		99537D5F2C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9959C7152C74462D006208CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -142,11 +184,11 @@
 				99008D6C2C716E7500DC836C /* RxCocoa in Frameworks */,
 				9959C7192C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				99008D682C716E5D00DC836C /* Alamofire in Frameworks */,
-				992F6BBF2C79ABC200C59543 /* Then in Frameworks */,
 				9959C71B2C744661006208CA /* FirebaseCrashlytics in Frameworks */,
 				99008D6E2C716E7500DC836C /* RxSwift in Frameworks */,
 				99008D6A2C716E6600DC836C /* SnapKit in Frameworks */,
 				99008D702C716E8300DC836C /* Kingfisher in Frameworks */,
+				99408B7D2C82D53900544EC1 /* iamport-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +215,7 @@
 		99008CDB2C6C985300DC836C /* UniFormLife */ = {
 			isa = PBXGroup;
 			children = (
+				99408B762C8219F800544EC1 /* Coordinator */,
 				99008D4F2C6DFA8100DC836C /* LoginQuery */,
 				99008D462C6DFA1800DC836C /* Model */,
 				99008D392C6DF8DB00DC836C /* Network */,
@@ -217,6 +260,8 @@
 				99008CFE2C6C9B8600DC836C /* UIViewController+Extension.swift */,
 				99008D042C6C9E5900DC836C /* ReuseIdentifier.swift */,
 				99008D062C6C9ED700DC836C /* UIColor+Extension.swift */,
+				99408B722C805FAB00544EC1 /* UIImageView+Extension.swift */,
+				99408B742C8060D300544EC1 /* UIButton+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -239,6 +284,7 @@
 				99008D252C6D9A8600DC836C /* BaseButton.swift */,
 				992F6BB62C79663D00C59543 /* AddPaddingLabel.swift */,
 				99227B372C7DFBC9000DCA5D /* RoundRectTextField.swift */,
+				99408B702C802F4000544EC1 /* TagImageView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -313,11 +359,14 @@
 		99008D392C6DF8DB00DC836C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				99408B892C8361EE00544EC1 /* Service */,
+				99408B8C2C83630000544EC1 /* APIManager */,
 				99008D3A2C6DF8EA00DC836C /* Header.swift */,
 				99008D3C2C6DF8FD00DC836C /* Router.swift */,
 				99008D3E2C6DF95400DC836C /* UserDefaultsManeger.swift */,
 				99008D402C6DF97800DC836C /* TargetType.swift */,
 				99008D442C6DF9FC00DC836C /* NetworkManeger.swift */,
+				99408B792C82257700544EC1 /* NetworkInterceptor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -332,6 +381,9 @@
 				99008D652C70CCBB00DC836C /* FetchPost.swift */,
 				99008D752C71AE9700DC836C /* ValidEmail.swift */,
 				992F6BC92C7CABCA00C59543 /* LikePost.swift */,
+				99408B832C82E52000544EC1 /* PaymentValidation.swift */,
+				99408B932C84568800544EC1 /* CreateComment.swift */,
+				99408B972C84887B00544EC1 /* FetchMyProfile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,6 +393,12 @@
 			children = (
 				99008D502C6DFA8D00DC836C /* LoginQuery.swift */,
 				992F6BB42C77552000C59543 /* EditPostQuery.swift */,
+				99227B4C2C7F5683000DCA5D /* UploadPostQuery.swift */,
+				99408B812C82E2EE00544EC1 /* PaymentValidateQuery.swift */,
+				99408B8F2C83665800544EC1 /* FetchPostQuery.swift */,
+				99408B912C84561000544EC1 /* CommnetQuery.swift */,
+				99408B952C847E0B00544EC1 /* LikeQuery.swift */,
+				99408B992C8489C000544EC1 /* EditMyprofileQuery.swift */,
 			);
 			path = LoginQuery;
 			sourceTree = "<group>";
@@ -368,6 +426,7 @@
 				99227B352C7DF816000DCA5D /* AddPostViewModel.swift */,
 				99537D5D2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift */,
 				99537D5F2C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift */,
+				99227B482C7F3602000DCA5D /* PostRequestModel.swift */,
 			);
 			path = AddPost;
 			sourceTree = "<group>";
@@ -376,6 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				99008D5F2C6F430100DC836C /* UniformStyleFeedViewController.swift */,
+				99408B632C7FB5C900544EC1 /* UniformStyleFeedCollectionViewCell.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -383,6 +443,7 @@
 		99008D5C2C6F421E00DC836C /* UniformList */ = {
 			isa = PBXGroup;
 			children = (
+				99408B7E2C82D6FA00544EC1 /* Payment */,
 				992F6BBA2C79A9D500C59543 /* Detail */,
 				99008D5D2C6F42E800DC836C /* UniformListViewController.swift */,
 				99008D772C71BEFC00DC836C /* LeagueFilterCollectionViewCell.swift */,
@@ -397,8 +458,42 @@
 			children = (
 				992F6BBB2C79A9F000C59543 /* UniformListDetailViewController.swift */,
 				992F6BC72C7C98A600C59543 /* UniformListDetailViewModel.swift */,
+				99408B872C832FB700544EC1 /* DetailViewRecommandCollectionViewCell.swift */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		99408B762C8219F800544EC1 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				99408B772C821A0900544EC1 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		99408B7E2C82D6FA00544EC1 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				99408B7F2C82D71200544EC1 /* PaymentViewController.swift */,
+				99408B852C82F4A800544EC1 /* PaymentViewModel.swift */,
+			);
+			name = Payment;
+			sourceTree = "<group>";
+		};
+		99408B892C8361EE00544EC1 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				99408B8A2C83621000544EC1 /* NetworkService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		99408B8C2C83630000544EC1 /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				99408B8D2C8363A600544EC1 /* PostNetworkManager.swift */,
+			);
+			path = APIManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,7 +521,7 @@
 				99008D6F2C716E8300DC836C /* Kingfisher */,
 				9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */,
 				9959C71A2C744661006208CA /* FirebaseCrashlytics */,
-				992F6BBE2C79ABC200C59543 /* Then */,
+				99408B7C2C82D53900544EC1 /* iamport-ios */,
 			);
 			productName = UniFormLife;
 			productReference = 99008CD92C6C985300DC836C /* UniFormLife.app */;
@@ -463,7 +558,7 @@
 				99008D1D2C6D95CF00DC836C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				99008D202C6D95DA00DC836C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				9959C7172C744661006208CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				992F6BBD2C79ABC200C59543 /* XCRemoteSwiftPackageReference "Then" */,
+				99408B7B2C82D3DF00544EC1 /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 99008CDA2C6C985300DC836C /* Products */;
 			projectDirPath = "";
@@ -521,27 +616,40 @@
 				99008D4C2C6DFA4800DC836C /* Refresh.swift in Sources */,
 				99008D3B2C6DF8EA00DC836C /* Header.swift in Sources */,
 				99008CFF2C6C9B8600DC836C /* UIViewController+Extension.swift in Sources */,
+				99408B642C7FB5C900544EC1 /* UniformStyleFeedCollectionViewCell.swift in Sources */,
 				99008D412C6DF97800DC836C /* TargetType.swift in Sources */,
 				99008D242C6D965600DC836C /* SignTextField.swift in Sources */,
+				99408B922C84561000544EC1 /* CommnetQuery.swift in Sources */,
 				99008D262C6D9A8600DC836C /* BaseButton.swift in Sources */,
 				992F6BA62C76280900C59543 /* UniformListViewModel.swift in Sources */,
+				99408B7A2C82257700544EC1 /* NetworkInterceptor.swift in Sources */,
+				99408B902C83665800544EC1 /* FetchPostQuery.swift in Sources */,
 				99008D662C70CCBB00DC836C /* FetchPost.swift in Sources */,
 				99008D642C6F432B00DC836C /* ProfileViewController.swift in Sources */,
+				99408B782C821A0900544EC1 /* AppCoordinator.swift in Sources */,
 				99008D622C6F431600DC836C /* AddPostViewController.swift in Sources */,
+				99408B822C82E2EE00544EC1 /* PaymentValidateQuery.swift in Sources */,
 				99008CF52C6C9A7100DC836C /* BaseViewController.swift in Sources */,
 				99008D292C6D9E5500DC836C /* EmailValidViewController.swift in Sources */,
 				99008D762C71AE9700DC836C /* ValidEmail.swift in Sources */,
 				99008D312C6DD7DB00DC836C /* NicknameViewController.swift in Sources */,
+				99408B842C82E52000544EC1 /* PaymentValidation.swift in Sources */,
+				99408B712C802F4000544EC1 /* TagImageView.swift in Sources */,
 				992F6BC82C7C98A600C59543 /* UniformListDetailViewModel.swift in Sources */,
 				99008D582C6F37D700DC836C /* Image.swift in Sources */,
+				99408B8B2C83621000544EC1 /* NetworkService.swift in Sources */,
 				99008D452C6DF9FC00DC836C /* NetworkManeger.swift in Sources */,
 				992F6BB72C79663D00C59543 /* AddPaddingLabel.swift in Sources */,
 				99008D072C6C9ED700DC836C /* UIColor+Extension.swift in Sources */,
 				99008D482C6DFA1F00DC836C /* Login.swift in Sources */,
 				992F6BCA2C7CABCA00C59543 /* LikePost.swift in Sources */,
+				99408B862C82F4A800544EC1 /* PaymentViewModel.swift in Sources */,
+				99227B492C7F3602000DCA5D /* PostRequestModel.swift in Sources */,
 				99008D052C6C9E5900DC836C /* ReuseIdentifier.swift in Sources */,
+				99408B9A2C8489C000544EC1 /* EditMyprofileQuery.swift in Sources */,
 				99227B382C7DFBC9000DCA5D /* RoundRectTextField.swift in Sources */,
 				992F6BBC2C79A9F000C59543 /* UniformListDetailViewController.swift in Sources */,
+				99408B882C832FB700544EC1 /* DetailViewRecommandCollectionViewCell.swift in Sources */,
 				99008CDD2C6C985300DC836C /* AppDelegate.swift in Sources */,
 				99008D532C6E0C9800DC836C /* SignInViewModel.swift in Sources */,
 				99008D4A2C6DFA3000DC836C /* Profile.swift in Sources */,
@@ -549,25 +657,33 @@
 				99008D782C71BEFD00DC836C /* LeagueFilterCollectionViewCell.swift in Sources */,
 				99008D742C71A55000DC836C /* EmailValidViewModel.swift in Sources */,
 				99008D3D2C6DF8FD00DC836C /* Router.swift in Sources */,
+				99408B8E2C8363A600544EC1 /* PostNetworkManager.swift in Sources */,
 				99008D5E2C6F42E800DC836C /* UniformListViewController.swift in Sources */,
 				99008D7A2C71CD5B00DC836C /* UniformListCollectionViewCell.swift in Sources */,
 				99008CFC2C6C9B3100DC836C /* ViewModelType.swift in Sources */,
 				99008D602C6F430100DC836C /* UniformStyleFeedViewController.swift in Sources */,
 				99227B362C7DF816000DCA5D /* AddPostViewModel.swift in Sources */,
+				99408B752C8060D300544EC1 /* UIButton+Extension.swift in Sources */,
 				99008D0C2C6CC31500DC836C /* Font.swift in Sources */,
+				99408B802C82D71200544EC1 /* PaymentViewController.swift in Sources */,
 				99008D562C6F37B700DC836C /* HomeTabBarController.swift in Sources */,
 				99008D512C6DFA8D00DC836C /* LoginQuery.swift in Sources */,
 				99008D112C6D958B00DC836C /* SignInViewController.swift in Sources */,
+				99408B962C847E0B00544EC1 /* LikeQuery.swift in Sources */,
+				99408B982C84887B00544EC1 /* FetchMyProfile.swift in Sources */,
 				99008D342C6DD89800DC836C /* BirthDayViewController.swift in Sources */,
 				992F6BB92C7968A800C59543 /* CollectionView.swift in Sources */,
 				99537D602C7DC2FE00BE20C5 /* SelectPostImageCollectionViewCell.swift in Sources */,
 				99008CF72C6C9A8900DC836C /* BaseTableViewCell.swift in Sources */,
+				99408B942C84568800544EC1 /* CreateComment.swift in Sources */,
 				99008CDF2C6C985300DC836C /* SceneDelegate.swift in Sources */,
 				99008D4E2C6DFA5100DC836C /* FileModel.swift in Sources */,
 				99008D0A2C6CC2CA00DC836C /* Color.swift in Sources */,
 				99537D5E2C7DBB2C00BE20C5 /* AddPhotoCollectionViewCell.swift in Sources */,
 				992F6BB52C77552000C59543 /* EditPostQuery.swift in Sources */,
 				99008D032C6C9DD600DC836C /* APIKey.swift in Sources */,
+				99227B4D2C7F5683000DCA5D /* UploadPostQuery.swift in Sources */,
+				99408B732C805FAB00544EC1 /* UIImageView+Extension.swift in Sources */,
 				99008CF92C6C9AB300DC836C /* BaseCollectionViewCell.swift in Sources */,
 				99008D2D2C6DD65500DC836C /* PasswordViewController.swift in Sources */,
 			);
@@ -721,6 +837,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -753,6 +870,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -835,12 +953,12 @@
 				minimumVersion = 5.1.1;
 			};
 		};
-		992F6BBD2C79ABC200C59543 /* XCRemoteSwiftPackageReference "Then" */ = {
+		99408B7B2C82D3DF00544EC1 /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then.git";
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 1.4.2;
 			};
 		};
 		9959C7172C744661006208CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -879,10 +997,10 @@
 			package = 99008D1D2C6D95CF00DC836C /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		992F6BBE2C79ABC200C59543 /* Then */ = {
+		99408B7C2C82D53900544EC1 /* iamport-ios */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 992F6BBD2C79ABC200C59543 /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
+			package = 99408B7B2C82D3DF00544EC1 /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
 		};
 		9959C7182C744661006208CA /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;

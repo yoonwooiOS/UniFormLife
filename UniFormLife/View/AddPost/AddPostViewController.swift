@@ -67,6 +67,8 @@ final class AddPostViewController: BaseViewController  {
     private let viewModel = AddPostViewModel()
     
     override func bind() {
+//                UserDefaultsManeger.shared.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YmRkZDJlMzU4Y2MyODIzOGQxN2NlMSIsImlhdCI6MTcyNDY4MDg4NywiZXhwIjoxNzI0NjgxMTg3LCJpc3MiOiJzZXNhY18zIn0.jjSsMw0eQOnwUUJTvbFO367SGi48FJ0sepfUNdPP7xM"
+//                UserDefaultsManeger.shared.refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YmRkZDJlMzU4Y2MyODIzOGQxN2NlMSIsImlhdCI6MTcyNDY4MDg4NywiZXhwIjoxNzI0NzY3Mjg3LCJpc3MiOiJzZXNhY18zIn0.H2XPZZPr8w6goJkKoUJBiLe1SPieiPYRfYgnI-_Q_r4"
         let addPhotoTapped = collectionView.rx.itemSelected
             .filter { $0.row == 0 }
             .do(onNext: { [weak self] _ in

@@ -138,7 +138,7 @@ final class AddPostViewModel: ViewModelType {
         }
     }
     private func uploadImages(images: [UIImage], title: String, content: String, price: Int, size: String, condition: String, season: String, league: String) {
-        NetworkManager.shared.uploadImagefiles(images: images)
+        NetworkService.shared.uploadImagefiles(images: images)
             .subscribe(onSuccess: { result in
                 switch result {
                 case .success(let files):
@@ -165,7 +165,7 @@ final class AddPostViewModel: ViewModelType {
     }
     
     private func uploadPostRequest(_ postRequestModel: UploadPostQuery) {
-        NetworkManager.shared.callRequest(router: .uploadPost(postData: postRequestModel), type: PostData.self)
+        NetworkService.shared.uploadPostRequest(postRequestModel)
             .subscribe(onSuccess: { result in
                 switch result {
                 case .success(let fetchPost):
@@ -173,7 +173,7 @@ final class AddPostViewModel: ViewModelType {
                     self.uploadSuccessTrigger.onNext(())
                 case .failure(let error):
                     print("업로드 실패: \(error)")
-                    //MARK: 상태코드 처리
+
                 }
             }, onFailure: { error in
                 print("요청 실패: \(error)")
