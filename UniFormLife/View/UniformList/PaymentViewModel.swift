@@ -31,7 +31,7 @@ final class PaymentViewModel: ViewModelType {
                   let payment = IamportPayment(
                       pg: PG.html5_inicis.makePgRawName(pgId: "INIpayTest"),
                       merchant_uid: "ios_\(APIKey.key)_\(Int(Date().timeIntervalSince1970))",
-                      amount: "1").then {
+                      amount: "\(postData.price)").then {
                           $0.pay_method = PayMethod.card.rawValue
                           $0.name = postData.title
                           $0.buyer_name = postData.creator.user_id
