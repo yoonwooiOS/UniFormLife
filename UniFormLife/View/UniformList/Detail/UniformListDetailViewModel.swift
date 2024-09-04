@@ -15,9 +15,11 @@ final class UniformListDetailViewModel: ViewModelType {
     struct Input {
         let likeButtonTapped: ControlEvent<Void>
         let paymentButtonTapped: ControlEvent<Void>
+        let postData: PostData?
     }
     struct Output {
         let isLiked: Observable<Bool>
+        let fetchUserPost: Observable<[PostData]>
         let paymentButtonTapped: ControlEvent<Void>
     }
     
@@ -25,6 +27,8 @@ final class UniformListDetailViewModel: ViewModelType {
    
         let isLiked = BehaviorRelay<Bool>(value: false)
         let isLikedObservable = isLiked.asObservable()
+        let fetchUserPostSubject = BehaviorSubject<[PostData]>(value: [])
+
         input.likeButtonTapped
             .withLatestFrom(isLiked)
             .map { !$0 }
@@ -43,7 +47,22 @@ final class UniformListDetailViewModel: ViewModelType {
                 }
             })
             .disposed(by: disposeBag)
-            
-        return Output(isLiked: isLikedObservable, paymentButtonTapped: input.paymentButtonTapped)
+       
+        NetworkService.shared.fetchUserPost(userId: input.postData?.creator.user_id ?? "")
+            .subscribe(onSuccess: { result in
+                switch result {
+                case .success(let fetchPost):
+                    fetchUserPostSubject.onNext(fetchPost.data)
+                case .failure(let error):
+                    print("FetchUserPost 실패: \(error)")
+                }
+            }, onFailure: { error in
+                print("네트워크 요청 실패: \(error)")
+            })
+            .disposed(by: disposeBag)
+
+        let fetchUserPostData = fetchUserPostSubject.asObservable()
+        
+        return Output(isLiked: isLikedObservable, fetchUserPost: fetchUserPostData, paymentButtonTapped: input.paymentButtonTapped)
     }
 }

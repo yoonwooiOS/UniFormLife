@@ -83,18 +83,29 @@ final class UniformListDetailViewController: BaseViewController {
     private let sizeLabel = AddPaddingLabel()
     private let yearLabel = AddPaddingLabel()
     private let paymentButton = BaseButton(title: "구매하기")
+
+    private let bottonBaseView = UIView().then {
+        $0.backgroundColor = Color.white
+    }
+    private lazy var reccomandUserNameLabel = UILabel().then {
+        if let nickName =  postData?.creator.nick  {
+            $0.text = "\(nickName)님의 다른 게시물"
+        }
+        $0.font = Font.bold18
+    }
+    private let recommandCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionView.recommandCollectionViewLayout()).then {
+        $0.register(DetailViewRecommandCollectionViewCell.self, forCellWithReuseIdentifier: DetailViewRecommandCollectionViewCell.identifier)
+        $0.showsHorizontalScrollIndicator = false
+    }
     private let disposeBag = DisposeBag()
-    
     private let viewModel = UniformListDetailViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpImageBinding()
-        
-        
     }
+
     override func bind() {
-        let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap, paymentButtonTapped: paymentButton.rx.tap)
+        let input = UniformListDetailViewModel.Input(likeButtonTapped: likeButton.rx.tap, paymentButtonTapped: paymentButton.rx.tap, postData: postData)
         let output = viewModel.transform(input: input)
         output.isLiked
             .bind(with: self, onNext: { owner, isLiked in
@@ -103,12 +114,22 @@ final class UniformListDetailViewController: BaseViewController {
                 owner.likeButton.tintColor = isLiked ? .red : .lightGray
             })
             .disposed(by: disposeBag)
+
         output.paymentButtonTapped
             .bind(with: self) { owner, _ in
                 owner.goToOtehrVCwithCompletionHandler(vc: PaymentViewController(), mode: .push, tabbarHidden: true) { vc in
                     vc.postData = owner.postData
                     
                 }
+            }
+            .disposed(by: disposeBag)
+    
+        output.fetchUserPost
+            .bind(to: recommandCollectionView.rx.items(cellIdentifier: DetailViewRecommandCollectionViewCell.identifier, cellType: DetailViewRecommandCollectionViewCell.self)) { (row, element, cell) in
+                print(element, "output.fetchUserPost Element")
+                let data = element
+                cell.setUpCell(data: data)
+                
             }
             .disposed(by: disposeBag)
         
@@ -130,12 +151,12 @@ final class UniformListDetailViewController: BaseViewController {
         
     }
     override func setUpHierarchy() {
-        [baseScrollView, seperator,paymentButton].forEach {
+        [baseScrollView, seperator, bottonBaseView].forEach {
             view.addSubview($0)
         }
-        baseScrollView.addSubview(contentView)
-        
-        baseScrollView.addSubview(mainBaseView)
+        [contentView,mainBaseView,recommandCollectionView, reccomandUserNameLabel].forEach {
+            baseScrollView.addSubview($0)
+        }
         [scrollView, pageControl, userProfileBaseView].forEach {
             contentView.addSubview($0)
         }
@@ -145,6 +166,7 @@ final class UniformListDetailViewController: BaseViewController {
         [postTitle,content, usedLabel, sizeLabel, yearLabel].forEach {
             mainBaseView.addSubview($0)
         }
+        bottonBaseView.addSubview(paymentButton)
     }
     
     override func setUpLayout() {
@@ -157,7 +179,8 @@ final class UniformListDetailViewController: BaseViewController {
             make.width.equalToSuperview()
         }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top)
+            make.top.equalToSuperview()
+//            make.top.equalTo(contentView.snp.top)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(view.frame.height * 0.4)
         }
@@ -219,16 +242,33 @@ final class UniformListDetailViewController: BaseViewController {
         }
         content.snp.makeConstraints { make in
             make.top.equalTo(yearLabel.snp.bottom).offset(baseOffset).offset(8)
-            make.leading.trailing.equalToSuperview().inset(baseOffset)
+            make.horizontalEdges.equalToSuperview().inset(baseOffset)
+            
+        }
+        reccomandUserNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(content.snp.bottom).offset(32)
+            make.horizontalEdges.equalToSuperview().inset(baseOffset)
+        }
+        recommandCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(reccomandUserNameLabel.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(baseOffset)
+            make.height.equalTo(240)
             make.bottom.equalToSuperview().offset(-60)
         }
+        bottonBaseView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(80)
+            make.bottom.equalToSuperview()
+        }
         paymentButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(baseOffset)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
+           
         }
         //        contentView.snp.makeConstraints { make in
         //            make.bottom.equalTo(userProfileBaseView.snp.bottom).offset(900)
         //        }
+        
     }
     override func setUpView() {
         guard let postData else { return }
@@ -270,5 +310,15 @@ final class UniformListDetailViewController: BaseViewController {
         pageControl.numberOfPages = imageNames.count
         pageControl.isHidden = imageNames.count <= 1
     }
-    
+    override func setUpNavigationTitle() {
+        if let font = UIFont(name: "YoonChildfundkoreaManSeh", size: 20) {
+            self.navigationController?.navigationBar.titleTextAttributes = [
+                NSAttributedString.Key.font: font,
+//                NSAttributedString.Key.foregroundColor: UIColor.systemBlue
+            ]
+        } else {
+            print("폰트를 로드할 수 없습니다. 폰트 이름을 확인하세요.")
+        }
+        navigationItem.title = "프리미어리그"
+    }
 }
