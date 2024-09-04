@@ -15,7 +15,7 @@ final class NetworkService {
     static let session = Session(interceptor: NetworkInterceptor())
     private init() { }
     //MARK: 로그인, 회원가입 쪽 네트워크 리팩토링
-     func makeRequest<T: Decodable>(route: URLRequestConvertible, responseType: T.Type, completion: @escaping (T) -> Void) -> Single<T> {
+    func makeRequest<T: Decodable>(route: URLRequestConvertible, responseType: T.Type, completion: @escaping (T) -> Void) -> Single<T> {
         return Single<T>.create { single in
             do {
                 let urlRequest = try route.asURLRequest()
@@ -142,7 +142,7 @@ final class NetworkService {
         }
     }
     //MARK: 포스트 업로드
-    func uploadPostRequest(_ postRequestModel: UploadPostQuery) -> Single<Result<PostData, Error>> {
+    func uploadPost(_ postRequestModel: UploadPostQuery) -> Single<Result<PostData, Error>> {
         return Single<Result<PostData, Error>>.create { single in
             do {
                 let urlRequest = try Router.uploadPost(postData: postRequestModel).asURLRequest()
@@ -153,10 +153,10 @@ final class NetworkService {
                     .responseDecodable(of: PostData.self) { response in
                         switch response.result {
                         case .success(let success):
-                            print("uploadPostRequest 성공: \(success)")
+                            print("uploadPost 성공: \(success)")
                             single(.success(.success(success)))
                         case .failure(let error):
-                            print("uploadPostRequest 실패: \(error)")
+                            print("uploadPost 실패: \(error)")
                             single(.success(.failure(error)))
                         }
                     }
@@ -210,18 +210,18 @@ final class NetworkService {
             }
             NetworkService.session.request(urlRequest)
                 .response { response in
-                    print("Delete statusCode: \(response.response?.statusCode ?? 0)")
+                    print("deletePost statusCode: \(response.response?.statusCode ?? 0)")
                     switch response.result {
                     case .success:
                         if let statusCode = response.response?.statusCode, statusCode == 200 {
-                            print("Delete 성공")
+                            print("deletePost 성공")
                             single(.success(.success(())))
                         } else {
-                            print("Delete error: \(String(describing: response.response?.statusCode))")
+                            print("deletePost error: \(String(describing: response.response?.statusCode))")
                             single(.failure(response.result as! Error))
                         }
                     case .failure(let error):
-                        print("Delete 실패: \(error)")
+                        print("deletePost 실패: \(error)")
                         single(.success(.failure(error)))
                     }
                 }
@@ -264,10 +264,10 @@ final class NetworkService {
                     .responseDecodable(of: CreateComment.self) { response in
                         switch response.result {
                         case .success(let success):
-                            print("createComment 성공: \(success)")
+                            print("editCommnet 성공: \(success)")
                             single(.success(.success(success)))
                         case .failure(let error):
-                            print("createComment 실패: \(error)")
+                            print("editCommnet 실패: \(error)")
                             single(.success(.failure(error)))
                         }
                     }
@@ -289,18 +289,18 @@ final class NetworkService {
             print("URL Request: \(urlRequest)")
             NetworkService.session.request(urlRequest)
                 .response { response in
-                    print("Delete statusCode: \(response.response?.statusCode ?? 0)")
+                    print("deleteComment statusCode: \(response.response?.statusCode ?? 0)")
                     switch response.result {
                     case .success:
                         if let statusCode = response.response?.statusCode, statusCode == 200 {
-                            print("Delete 성공")
+                            print("deleteComment 성공")
                             single(.success(.success(())))
                         } else {
-                            print("Delete error: \(String(describing: response.response?.statusCode))")
+                            print("deleteComment error: \(String(describing: response.response?.statusCode))")
                             single(.failure(response.result as! Error))
                         }
                     case .failure(let error):
-                        print("Delete 실패: \(error)")
+                        print("deleteComment 실패: \(error)")
                         single(.success(.failure(error)))
                     }
                 }
@@ -319,10 +319,10 @@ final class NetworkService {
                     .responseDecodable(of: LikePost.self) { response in
                         switch response.result {
                         case .success(let success):
-                            print("uploadPostRequest 성공: \(success)")
+                            print("likePost 성공: \(success)")
                             single(.success(.success(success)))
                         case .failure(let error):
-                            print("uploadPostRequest 실패: \(error)")
+                            print("likePost 실패: \(error)")
                             single(.success(.failure(error)))
                         }
                     }
@@ -349,7 +349,7 @@ final class NetworkService {
                         }
                     }
             } catch {
-                print("Error creating request: \(error)")
+                print("fetchLikedPost: \(error)")
                 single(.success(.failure(error)))
             }
             return Disposables.create()
@@ -366,10 +366,33 @@ final class NetworkService {
                     .responseDecodable(of: FetchMyProfile.self) { response in
                         switch response.result {
                         case .success(let success):
-                            print("uploadPostRequest 성공: \(success)")
+                            print("fetchMyProfile 성공: \(success)")
                             single(.success(.success(success)))
                         case .failure(let error):
-                            print("uploadPostRequest 실패: \(error)")
+                            print("fetchMyProfile 실패: \(error)")
+                            single(.success(.failure(error)))
+                        }
+                    }
+            } catch {
+                single(.success(.failure(error)))
+            }
+            return Disposables.create()
+        }
+    }
+    func editMyProfile(editProfile: EditMyprofileQuery) -> Single<Result<FetchMyProfile, Error>> {
+        return Single<Result<FetchMyProfile, Error>>.create { single in
+            do {
+                let urlRequest = try Router.editMyProfile(query: editProfile).asURLRequest()
+                print("URL Request: \(urlRequest)")
+                NetworkService.session.request(urlRequest)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: FetchMyProfile.self) { response in
+                        switch response.result {
+                        case .success(let success):
+                            print("fetchMyProfile 성공: \(success)")
+                            single(.success(.success(success)))
+                        case .failure(let error):
+                            print("fetchMyProfile 실패: \(error)")
                             single(.success(.failure(error)))
                         }
                     }
