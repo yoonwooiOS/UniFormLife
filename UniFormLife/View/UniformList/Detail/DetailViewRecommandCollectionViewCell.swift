@@ -10,19 +10,19 @@ import Then
 import SnapKit
 
 final class DetailViewRecommandCollectionViewCell: BaseCollectionViewCell {
-    private let uniformImageView = UIImageView().then {
+    let uniformImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.layer.masksToBounds = true
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 4
+        $0.layer.cornerRadius = 12
+//        $0.backgroundColor = .brown
     }
-    private let titleLabel = UILabel().then {
-        $0.text = "파리생제르망 PSG홈 유니폼 저지 20-21 팝니다"
-        $0.numberOfLines = 2
+    let titleLabel = UILabel().then {
         $0.font = Font.regular12
+        $0.numberOfLines = 1
     }
-    private let priceLabel = UILabel().then {
-        $0.text = "119,000원"
-        $0.font = Font.regular12
+    let priceLabel = UILabel().then {
+        $0.font = Font.bold14
     }
     override func setUpHierarchy() {
         contentView.addSubview(uniformImageView)
@@ -31,15 +31,31 @@ final class DetailViewRecommandCollectionViewCell: BaseCollectionViewCell {
     }
     override func setUpLayout() {
         uniformImageView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview()
+            make.top.equalToSuperview().offset(20)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(200)
         }
         titleLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalTo(uniformImageView.snp.bottom).offset(2)
+            make.top.equalTo(uniformImageView.snp.bottom).offset(4)
+            make.horizontalEdges.equalToSuperview().inset(8)
         }
         priceLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.horizontalEdges.equalToSuperview().inset(8)
         }
+    }
+
+    func setUpCell(data: PostData) {
+        
+        if data.files.isEmpty {
+            uniformImageView.image = UIImage(named: "man1")
+        } else {
+            print("Image URL: \(data.files[0])") // 디버깅을 위한 출력
+            uniformImageView.setDownloadToImageView(urlString: data.files[0])
+        }
+        titleLabel.text = data.title
+        priceLabel.text = data.price.formatted() + "원"
+       
+        
     }
 }
