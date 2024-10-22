@@ -32,10 +32,10 @@ final class UniformListCollectionViewCell: BaseCollectionViewCell {
     override func setUpHierarchy() {
         contentView.addSubview(uniformImageView)
         contentView.addSubview(baseView)
-        [titleLabel, priceLabel,sizeLabel, yearLabel ].forEach {
+        [titleLabel, priceLabel,usedLabel,sizeLabel, yearLabel ].forEach {
             baseView.addSubview($0)
         }
-        uniformImageView.addSubview(usedLabel)
+//        uniformImageView.addSubview(usedLabel)
         uniformImageView.addSubview(isTradingLabel)
         
     }
@@ -70,16 +70,18 @@ final class UniformListCollectionViewCell: BaseCollectionViewCell {
             make.bottom.equalTo(uniformImageView.snp.bottom).inset(4)
             make.leading.equalToSuperview().offset(4)
         }
-        isTradingLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(uniformImageView.snp.bottom).inset(4)
-            make.leading.equalTo(usedLabel.snp.trailing).offset(4)
-            
-        }
+//        isTradingLabel.snp.makeConstraints { make in
+//            make.bottom.equalTo(uniformImageView.snp.bottom).inset(4)
+//            make.leading.equalTo(usedLabel.snp.trailing).offset(4)
+//            
+//        }
     }
     func setUpCell(data: PostData) {
        
         titleLabel.text = data.title
         usedLabel.updateText(text: data.content2)
+        //"새상품", "아주 좋은 상태", "약간의 사용감", "사용감 있음"
+        usedLabel.backgroundColor = UIColor(hex: "204797")
         priceLabel.text = data.price.formatted() + "원"
         sizeLabel.text = data.content1
         yearLabel.text = data.content3
